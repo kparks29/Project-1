@@ -1,0 +1,118 @@
+<html>
+<head>
+	<title></title>
+	<link type="text/css" rel="stylesheet" href="css/style.css"></link>
+	<script src="js/lib/angular.min.js"></script>
+	<script src="https://cdn.firebase.com/v0/firebase.js"></script>
+	<script src="https://cdn.firebase.com/libs/angularfire/0.6.0/angularfire.min.js"></script>
+	<script src="js/script.js"></script>
+</head>
+<body offsets class="coinCursor" id="body" x-ng-app="marioTicTacToe" x-ng-controller="MainCtrl" x-ng-init="walk();">
+	<div id="app">
+		<div id='userInfo'>
+			<div id='player1'>
+				<span id='name1'>MARIO</span><br />
+				<span id='score1'>WINS = </span>
+			</div>
+			<div id='player2'>
+				<span id='name2'>LUIGI</span><br />
+				<span id='score2'>WINS = </span>
+			</div>
+			<div id="level">
+				WORLD<br />
+				<span id="world"> - </span>
+			</div>
+			<div id="who">
+				TURN<br />
+				<span id="turn"></span>
+			</div>
+			<div id="timer">
+				TIME<br />
+				<span id='time'></span>
+			</div>
+		</div>
+		<div class="clear"></div>
+		<div id="spaceHolder"></div>
+		<div id='game'>
+			<div id="gameBoard">
+				<div x-ng-repeat="row in board track by $index" id="row{{$index}}">
+					<div x-ng-repeat="cell in row" id="cell{{$parent.$index}}{{$index}}">{{board[$parent.$index][$index]}}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="begin" class="coinBox"></div>
+	<div id="mario" style="left: {{marioLeftStyle}}px; background-position: {{marioBgStyle}};"></div>
+	<div id="reg"></div>
+	<div id="cloud"></div>
+	<div id="cloud2"></div>
+	<div id="cloud3"></div>
+	<div id="cloudCluster"></div>
+	<div id="mountain"></div>
+	<div id="castle"></div>
+	<div id="flag"></div>
+	<div id="flagPole"></div>
+</body>
+</html>
+
+
+<!-- <html>
+<head>
+	<title></title>
+	<link type="text/css" rel="stylesheet" href="css/style.css"></link>
+	<script src="js/lib/angular.min.js"></script>
+	<script src="https://cdn.firebase.com/v0/firebase.js"></script>
+	<script src="https://cdn.firebase.com/libs/angularfire/0.6.0/angularfire.min.js"></script>
+	<script src="js/script.js"></script>
+</head>
+<body offsets class="coinCursor" id="body" x-ng-app="marioTicTacToe" x-ng-controller="MainCtrl" x-ng-init="walk();">
+	<div id="app">
+		<div id='userInfo'>
+			<div id='player1'>
+				<span id='name1'>MARIO</span><br />
+				<span id='score1'>WINS = {{score1}}</span>
+			</div>
+			<div id='player2'>
+				<span id='name2'>LUIGI</span><br />
+				<span id='score2'>WINS = {{score2}}</span>
+			</div>
+			<div id="level">
+				WORLD<br />
+				<span id="world">{{world}} - {{level}}</span>
+			</div>
+			<div id="who">
+				TURN<br />
+				<span id="turn">{{turn}}</span>
+			</div>
+			<div id="timer">
+				TIME<br />
+				<span id='time'>{{timeCountdown}}</span>
+			</div>
+		</div>
+		<div class="clear"></div>
+		<div id="spaceHolder"></div>
+		<div id='game' x-ng-style="{{gameStyle}}">
+			<div id="gameBoard">
+				<div x-ng-repeat="row in board track by $index" id="row{{$index}}">
+					<div x-ng-repeat="cell in row" id="cell{{$parent.$index}}{{$index}}" class="{{boardClass[$parent.$index][$index]}}" x-ng-click="boardClickHandler($parent.$index, $index);">{{board[$parent.$index][$index]}}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div offsets id="begin" class="coinBox {{resetClass}}" x-ng-click="resetClick();" x-ng-style="{{resetStyle}};">{{resetText}}</div>
+	<div offsets id="mario" x-ng-style="{{marioLeftStyle}};" class="{{marioClass}}"></div>
+	<div offsets id="reg" x-ng-style="{{floorStyle}}"></div>
+	<div offsets id="cloud" x-ng-style="{{cloudLeft[0]}};{{cloudTop1}};"></div>
+	<div offsets id="cloud2" x-ng-style="{{cloudLeft[1]}};{{cloudTop2}};"></div>
+	<div offsets id="cloud3" x-ng-style="{{cloudLeft[2]}};{{cloudTop3}};"></div>
+	<div offsets id="cloudCluster" x-ng-style="{{cloudLeft[3]}};{{cloudTop4}};"></div>
+	<div offsets id="bush" x-ng-style="{{bushStyle}}"></div>
+	<div offsets id="mountain" x-ng-style="{{mountainStyle}}"></div>
+	<div offsets id="castle" x-ng-style="{{castleStyle}}"></div>
+	<div offsets id="flag" x-ng-style="{{flagLeftStyle}};{{flagBottomStyle}};"></div>
+	<div offsets id="flagPole" x-ng-style="{{flagPoleStyle}}"></div>
+</body>
+</html> -->
+
+
+<!-- {{marioBgStyle}};{{marioBottomStyle}};{{marioDisplayStyle}}; -->
