@@ -1,6 +1,44 @@
 angular.module('marioTicTacToe', ['firebase'])
 .controller('MainCtrl', function($scope,$firebase) {	
 
+
+
+    // var ticTacRef = new Firebase('https://mariotictactoe.firebaseio.com/'); 
+    // $scope.fbRoot = $firebase(ticTacRef);
+
+    // $scope.fbRoot.$on('loaded', function() {
+    //   var IDs = $scope.fbRoot.$getIndex();
+    //   if(IDs.length == 0) {
+    //     $scope.fbRoot.$add({ 
+    //       cycle: 0,
+    //       move: 0,
+    //       up: 60,
+    //       endMove: [],
+    //       go: false,
+    //       timeCount: 10,
+    //       timeClicked: false,
+    //       world: 1,
+    //       level: 1,
+    //       counter: 0,
+    //       filler: "O",
+    //       win: false,
+    //       wins: [0,0],
+    //       board: [["T","I","C"],["T","A","C"],["T","O","E"]]
+    //     });
+    //     $scope.fbRoot.$on('change', function() {
+    //       IDs = $scope.fbRoot.$getIndex();
+    //       $scope.game = $scope.fbRoot.$child(IDs[0]);
+    //     });
+    //   } 
+    //   else 
+    //   {
+    //     $scope.game = $scope.fbRoot.$child(IDs[0]);
+    //   }
+    // });
+
+
+
+
   $scope.game = {
     cycle: 0,
     move: 0,
@@ -20,6 +58,12 @@ angular.module('marioTicTacToe', ['firebase'])
     wins: [0,0],
     board: [["T","I","C"],["T","A","C"],["T","O","E"]]
   }
+
+
+// $scope.clickSound = new Audio('sounds/smw_coin.wav'),
+// $scope.winnerSound = new Audio('sounds/winner.wav'),
+// $scope.resetSound = new Audio('sounds/reset.wav'),
+
 //will run reset right away instead of loading these variables
   $scope.resetClass = "coinBox";
   $scope.resetText = "?";
@@ -71,7 +115,6 @@ angular.module('marioTicTacToe', ['firebase'])
 					break;
 			}
 
-      //need to find out how to call offsetleft
 		 	if ($scope.game.move > 260) {
 		 		$scope.marioBgStyle = "-129px 0";
 		 		$scope.marioClass = "jump";
@@ -107,8 +150,6 @@ angular.module('marioTicTacToe', ['firebase'])
         $scope.reset();
     }
     
-    //figureout how to make a cell click handler using ng-click
-    //this section probably doesnt work
     $scope.boardClickHandler = function(i, j) {
       if ($scope.game.board[i][j] == "" && $scope.game.win == false) {
           $scope.game.clickSound.play();
@@ -129,35 +170,38 @@ angular.module('marioTicTacToe', ['firebase'])
 
 
      $scope.checkWin = function () {
-//       //need to change win logic
-//   //       if (counter <=9) {
-//   //           //check wins for x and send player1Wins
-//   //           if ((moves[0] + moves[1] + moves[2]) == "XXX" ){player1Wins();}
-//   //           if ((moves[3] + moves[4] + moves[5]) == "XXX" ){player1Wins();}
-//   //           if ((moves[6] + moves[7] + moves[8]) == "XXX" ){player1Wins();}
-//   //           if ((moves[0] + moves[3] + moves[6]) == "XXX" ){player1Wins();}
-//   //           if ((moves[1] + moves[4] + moves[7]) == "XXX" ){player1Wins();}
-//   //           if ((moves[2] + moves[5] + moves[8]) == "XXX" ){player1Wins();}
-//   //           if ((moves[0] + moves[4] + moves[8]) == "XXX" ){player1Wins();}
-//   //           if ((moves[2] + moves[4] + moves[6]) == "XXX" ){player1Wins();}
-//   //           //check wins for o and send player2Wins
-//   //           if ((moves[0] + moves[1] + moves[2]) == "OOO" ){player2Wins();}
-//   //           if ((moves[3] + moves[4] + moves[5]) == "OOO" ){player2Wins();}
-//   //           if ((moves[6] + moves[7] + moves[8]) == "OOO" ){player2Wins();}
-//   //           if ((moves[0] + moves[3] + moves[6]) == "OOO" ){player2Wins();}
-//   //           if ((moves[1] + moves[4] + moves[7]) == "OOO" ){player2Wins();}
-//   //           if ((moves[2] + moves[5] + moves[8]) == "OOO" ){player2Wins();}
-//   //           if ((moves[0] + moves[4] + moves[8]) == "OOO" ){player2Wins();}
-//   //           if ((moves[2] + moves[4] + moves[6]) == "OOO" ){player2Wins();}
-//   //       }
-        
 
-
-//         if ($scope.game.counter >= 9 && $scope.game.win != true) {
-//           $scope.turn = "TIE";
-//           $scope.gameOver();
-//         }
         
+        for (var i=0; i<$scope.game.board.length; i++) {
+          var r=0; c=0; d1=0; d2=0; //reset checking variables
+          for (var j=0; j<$scope.game.board[i].length;j++) {
+            if ($scope.game.board[i][j] == $scope.game.filler) {r++}; //check rows
+            if ($scope.game.board[j][i] == $scope.game.filler) {c++}; //check columns
+            if ($scope.game.board[j][j] == $scope.game.filler) {d1++}; //check backward diagonal
+            if ($scope.game.board[j][2-j] == $scope.game.filler) {d2++}; //check forward diagonal
+             if(d1 == 3 || d2 ==3) {
+              $scope.game.win = true;
+              if ($scope.game.filler == "X") {
+                $scope.player1Wins();
+              }
+              else {
+                $scope.player2Wins();
+              }
+             }
+            }
+          
+          if (r == 3 || c == 3){
+            $scope.game.win = true;
+            if ($scope.game.filler == "X") {
+              $scope.player1Wins();
+            } 
+            else {
+              $scope.player2Wins();
+            }
+          }
+          else if ($scope.game.counter == 9) {$scope.turn="TIE"}
+
+        }
      }
 
 
@@ -432,29 +476,4 @@ angular.module('marioTicTacToe', ['firebase'])
 
 
 
-// angular.module('TicTacToe', ['firebase'])
-//   .controller('TicTacToeCtrl', function($scope, $firebase) {
-//     var numRows = 6;
-//     var numColumns = 7;
-//     var ticTacRef = new Firebase(''); //https://intense-fire-XXXX.firebaseio.com
-//     $scope.fbRoot = $firebase(ticTacRef);
 
-//     $scope.fbRoot.$on('loaded', function() {
-//       var IDs = $scope.fbRoot.$getIndex();
-//       if(IDs.length == 0) {
-//         $scope.fbRoot.$add({ 
-//           board: [],
-//           xTurn: true
-//         });
-//         $scope.fbRoot.$on('change', function() {
-//           IDs = $scope.fbRoot.$getIndex();
-//           $scope.obj = $scope.fbRoot.$child(IDs[0]);
-//         });
-//       } else {
-//         $scope.obj = $scope.fbRoot.$child(IDs[0]);
-//       }
-//     }
-
-//     $scope.makeMove = function(i, j) {  // or function(i) if using one dimensional board
-//     }
-//   }
