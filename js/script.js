@@ -42,6 +42,12 @@ angular.module('marioTicTacToe', ['firebase'])
   $scope.marioDisplayStyle = 'block';
   $scope.resetStyle = 'block';
   $scope.bushStyle = 680;
+  $scope.floorStyle = -1;
+  $scope.mountainStyle = 20;
+  $scope.castleStyle = 1475;
+  $scope.flagLeftStyle = 1320;
+  $scope.flagBottomStyle = 350;
+  $scope.flagPoleStyle = 1300;
 
 
 
@@ -108,21 +114,21 @@ angular.module('marioTicTacToe', ['firebase'])
           $scope.game.clickSound.play();
           $scope.togglePlayer();
           $scope.game.board[i][j] = $scope.game.filler;
-          $scope.game.boardClass[i][j] = "";
+          $scope.game.boardClass = "";
           $scope.game.counter++;
           $scope.game.timeCount = 10;
-          //$scope.checkWin();
+          $scope.checkWin();
       } 
     }
     
 
     $scope.togglePlayer = function () {
-        $scope.game.filler = (filler == "X"?"O":"X");
-        $scope.turn = (filler == "X"?"LUIGI":"MARIO");
+        $scope.game.filler = ($scope.game.filler == "X"?"O":"X");
+        $scope.turn = ($scope.game.filler == "X"?"LUIGI":"MARIO");
     }
 
 
-//     $scope.checkWin = function () {
+     $scope.checkWin = function () {
 //       //need to change win logic
 //   //       if (counter <=9) {
 //   //           //check wins for x and send player1Wins
@@ -152,184 +158,186 @@ angular.module('marioTicTacToe', ['firebase'])
 //           $scope.gameOver();
 //         }
         
-//     }
+     }
 
 
-//     $scope.player1Wins = function () {
-//         $scope.turn = "MARIO WINS!";
-//         $scope.game.wins[0]++;
-//         $scope.score1 = $scope.game.wins[0];
-//         $scope.gameOver();
-//     }
+    $scope.player1Wins = function () {
+        $scope.turn = "MARIO WINS!";
+        $scope.game.wins[0]++;
+        $scope.score1 = $scope.game.wins[0];
+        $scope.gameOver();
+    }
 
-//     $scope.player2Wins =  function () {
-//         $scope.turn = "LUIGI WINS!";
-//         $scope.game.wins[1]++;
-//         $scope.score2 = $scope.game.wins[1];
-//         $scope.gameOver();
-//     }
+    $scope.player2Wins =  function () {
+        $scope.turn = "LUIGI WINS!";
+        $scope.game.wins[1]++;
+        $scope.score2 = $scope.game.wins[1];
+        $scope.gameOver();
+    }
 
-//   $scope.marioGoInCastle = function () {
-//     switch ($scope.game.cycle) {
-//         case 0:
-//           $scope.marioBgStyle = "background-position: -129px 0";
-//           $scope.game.cycle++;
-//           break;
-//         case 1:
-//           $scope.marioBgStyle = "background-position: -86px 0";
-//           $scope.game.cycle++;
-//           break;
-//         case 2:
-//           $scope.marioBgStyle = "background-position: -50px 0";
-//           $scope.game.cycle++;
-//           break;
-//         case 3:
-//           $scope.marioBgStyle = "background-position: -225px 0";
-//           $scope.game.cycle = 0;
-//           break;
-//       }
-//       //figure out offsets
-//      if (mario.offsetLeft > castle.offsetLeft + 60) {
-//       $scope.marioBgStyle = "background-position: -225px 0";
-//       $scope.marioDisplayStyle = "display: none";
-//       $scope.resetStyle = "display: block";
-//     }
-//     else {
-//       $scope.game.move += 20;
-//       $scope.marioLeftStyle = "left: " + $scope.game.move + "px";
-//       setTimeout(function() {$scope.$apply(function(){$scope.marioGoInCastle()});}, 100);
-//     }
-//   }
+  $scope.marioGoInCastle = function () {
+    switch ($scope.game.cycle) {
+        case 0:
+          $scope.marioBgStyle = "-129px 0";
+          $scope.game.cycle++;
+          break;
+        case 1:
+          $scope.marioBgStyle = "-86px 0";
+          $scope.game.cycle++;
+          break;
+        case 2:
+          $scope.marioBgStyle = "-50px 0";
+          $scope.game.cycle++;
+          break;
+        case 3:
+          $scope.marioBgStyle = "-225px 0";
+          $scope.game.cycle = 0;
+          break;
+      }
+      //figure out offsets
+     if ($scope.marioLeftStyle > $scope.castleStyle + 60) {
+      $scope.marioBgStyle = "-225px 0";
+      $scope.marioDisplayStyle = "none";
+      $scope.resetStyle = "block";
+    }
+    else {
+      $scope.game.move += 20;
+      $scope.marioLeftStyle = $scope.game.move;
+      setTimeout(function() {$scope.$apply(function(){$scope.marioGoInCastle()});}, 100);
+    }
+  }
 
-//   $scope.slideDownFlag = function () {
-//     if ($scope.game.up <= 65) {
-//       $scope.marioBgStyle = "background-position: -225px 0";
-//       $scope.marioGoInCastle();
-//     }
-//     else {
-//       if ($scope.game.up <= 80) {
-//         $scope.game.up = 60;
-//         $scope.marioBottomStyle = "bottom: " + $scope.game.up + "px";
-//         setTimeout(function() {$scope.$apply(function(){$scope.slideDownFlag()});}, 100);
-//       }
-//       else {
-//         $scope.game.up -= 20;
-//          $scope.flagBottomStyle = "bottom: " + ($scope.game.up + 40) + "px";
-//         $scope.marioBottomStyle = "bottom: " + $scope.game.up + "px";
-//         setTimeout(function() {$scope.$apply(function(){$scope.slideDownFlag()});}, 100);
-//       }
-//     }
-//   }
-//   $scope.jumpOnFlagSequence = function () {
-//     switch ($scope.game.cycle) {
-//         case 0:
-//           $scope.marioBgStyle = "background-position: -129px 0";
-//           $scope.game.cycle++;
-//           break;
-//         case 1:
-//           $scope.marioBgStyle = "background-position: -86px 0";
-//           $scope.game.cycle++;
-//           break;
-//         case 2:
-//           $scope.marioBgStyle = "background-position: -50px 0";
-//           c$scope.game.ycle++;
-//           break;
-//         case 3:
-//           $scope.marioBgStyle = "background-position: -225px 0";
-//           $scope.game.cycle = 0;
-//           break;
-//       }
-//       //fix offsets
-//       if (mario.offsetLeft > flag.offsetLeft - 11) {
-//         $scope.slideDownFlag();
-//        }
-//       //fix offsets
-//       else if (mario.offsetLeft > flag.offsetLeft - 175) {
-//         $scope.marioBgStyle = "background-position: -129px 0";
-//         $scope.game.up += 30;
-//         $scope.marioBottomStyle = "bottom: " + $scope.game.up + "px";
-//         $scope.game.move += 20;
-//         $scope.marioLeftStyle = "left: " + $scope.game.move + "px";
-//         setTimeout(function() {$scope.$apply(function(){$scope.jumpOnFlagSequence()});}, 75);
+  $scope.slideDownFlag = function () {
+    if ($scope.game.up <= 65) {
+      $scope.marioBgStyle = "-225px 0";
+      $scope.marioGoInCastle();
+    }
+    else {
+      if ($scope.game.up <= 80) {
+        $scope.game.up = 60;
+        $scope.marioBottomStyle = $scope.game.up;
+        setTimeout(function() {$scope.$apply(function(){$scope.slideDownFlag()});}, 100);
+      }
+      else {
+        $scope.game.up -= 20;
+         $scope.flagBottomStyle = $scope.game.up + 40;
+        $scope.marioBottomStyle = $scope.game.up;
+        setTimeout(function() {$scope.$apply(function(){$scope.slideDownFlag()});}, 100);
+      }
+    }
+  }
 
-//       }
-//     else {
-//       $scope.game.move += 20;
-//       $scope.marioLeftStyle = "left: " + $scope.game.move + "px";
-//       setTimeout(function() {$scope.$apply(function(){$scope.jumpOnFlagSequence()});}, 50);
-//     }
-//   }
 
-//   $scope.endGameSequence = function () {  //fix offsets
-//     $scope.game.endMove = [floor.offsetLeft, bush.offsetLeft, mountain.offsetLeft, castle.offsetLeft,flag.offsetLeft,flagPole.offsetLeft];
-//     $scope.endGameTimer = setInterval( function() {$scope.$apply(function(){
-//     if (castle.offsetLeft > document.getElementById('body').offsetWidth - 400) {
-//       for (i in $scope.game.endMove) {
-//         if (i == 0) {
-//           $scope.game.endMove[i] -=20
-//         }
-//         else {
-//           $scope.game.endMove[i] -= 10;
-//         }
-//       }
-//       $scope.floorStyle = $scope.game.endMove[0];
-//       $scope.bush.bushStyle = $scope.game.endMove[1];
-//       $scope.mountain.mountainStyle = $scope.game.endMove[2]; 
-//       $scope.castle.castleStyle = $scope.game.endMove[3];
-//       $scope.flag.flagLeftStyle = $scope.game.endMove[4];
-//       $scope.flagPole.flagPoleStyle = $scope.game.endMove[5]; 
-//       switch ($scope.game.cycle) {
-//         case 0:
-//           $scope.marioBgStyle = "-129px 0";
-//           $scope.game.cycle++;
-//           break;
-//         case 1:
-//           $scope.marioBgStyle = "-86px 0";
-//           $scope.game.cycle++;
-//           break;
-//         case 2:
-//           $scope.marioBgStyle = "background-position: -50px 0";
-//           $scope.game.cycle++;
-//           break;
-//         case 3:
-//           $scope.marioBgStyle = "background-position: -225px 0";
-//           $scope.game.cycle = 0;
-//           break;
-//       }
-//     } 
-//      });}, 50);
-//   } 
+  $scope.jumpOnFlagSequence = function () {
+    switch ($scope.game.cycle) {
+        case 0:
+          $scope.marioBgStyle = "-129px 0";
+          $scope.game.cycle++;
+          break;
+        case 1:
+          $scope.marioBgStyle = "-86px 0";
+          $scope.game.cycle++;
+          break;
+        case 2:
+          $scope.marioBgStyle = "-50px 0";
+          $scope.game.cycle++;
+          break;
+        case 3:
+          $scope.marioBgStyle = "-225px 0";
+          $scope.game.cycle = 0;
+          break;
+      }
 
-//     $scope.gameOver = function () {
-//         //play the winner sound
-//         $scope.game.winnerSound.play();
-//         //change the button to new game
-//         $scope.resetText = 'NEW GAME';
-//         //make the board no longer hoverable
-//         for (var i=0;i<$scope.game.board.length;i++){
-//           for (var j=0;j<$scope.game.board[i].length;j++) {
-//             $scope.boardClass[i][j] = ""; 
-//           }
-//          }
-//         //say that the game has been won
-//         $scope.game.win = true;
-//         clearInterval($scope.timer);
-//         $scope.game.timeClicked = false;
-//         $scope.resetStyle = "display: none";
-//         $scope.gameStyle = none;
-//         $scope.endGameSequence();
-//         setTimeout(function(){$scope.$apply(function(){clearInterval($scope.endGameTimer);$scope.jumpOnFlagSequence();});},3000);
-//     }
+      if ($scope.marioLeftStyle > $scope.flagLeftStyle - 11) {
+        $scope.slideDownFlag();
+       }
+
+      else if ($scope.marioLeftStyle > $scope.flagLeftStyle - 175) {
+        $scope.marioBgStyle = "-129px 0";
+        $scope.game.up += 30;
+        $scope.marioBottomStyle = $scope.game.up;
+        $scope.game.move += 20;
+        $scope.marioLeftStyle = $scope.game.move;
+        setTimeout(function() {$scope.$apply(function(){$scope.jumpOnFlagSequence()});}, 75);
+
+      }
+    else {
+      $scope.game.move += 20;
+      $scope.marioLeftStyle = $scope.game.move;
+      setTimeout(function() {$scope.$apply(function(){$scope.jumpOnFlagSequence()});}, 50);
+    }
+  }
+
+
+
+  $scope.endGameSequence = function () {  
+    $scope.game.endMove = [$scope.floorStyle, $scope.bushStyle, $scope.mountainStyle, $scope.castleStyle, $scope.flagLeftStyle, $scope.flagPoleStyle];
+    $scope.endGameTimer = setInterval( function() {$scope.$apply(function(){
+    if ($scope.castleStyle > 900) {
+      for (i in $scope.game.endMove) {
+        if (i == 0) {
+          $scope.game.endMove[i] -=20
+        }
+        else {
+          $scope.game.endMove[i] -= 10;
+        }
+      }
+      $scope.floorStyle = $scope.game.endMove[0];
+      $scope.bushStyle = $scope.game.endMove[1];
+      $scope.mountainStyle = $scope.game.endMove[2]; 
+      $scope.castleStyle = $scope.game.endMove[3];
+      $scope.flagLeftStyle = $scope.game.endMove[4];
+      $scope.flagPoleStyle = $scope.game.endMove[5]; 
+      switch ($scope.game.cycle) {
+        case 0:
+          $scope.marioBgStyle = "-129px 0";
+          $scope.game.cycle++;
+          break;
+        case 1:
+          $scope.marioBgStyle = "-86px 0";
+          $scope.game.cycle++;
+          break;
+        case 2:
+          $scope.marioBgStyle = "-50px 0";
+          $scope.game.cycle++;
+          break;
+        case 3:
+          $scope.marioBgStyle = "-225px 0";
+          $scope.game.cycle = 0;
+          break;
+      }
+    } 
+     });}, 50);
+  } 
+
+    $scope.gameOver = function () {
+        $scope.game.winnerSound.play();
+        $scope.resetText = 'NEW GAME';
+        for (var i=0;i<$scope.game.board.length;i++){
+          for (var j=0;j<$scope.game.board[i].length;j++) {
+            $scope.boardClass = ""; 
+          }
+         }
+        $scope.game.win = true;
+        clearInterval($scope.timer);
+        $scope.game.timeClicked = false;
+        $scope.resetStyle = 'none';
+        $scope.gameStyle = 'none';
+        $scope.endGameSequence();
+        setTimeout(function(){$scope.$apply(function(){clearInterval($scope.endGameTimer);$scope.jumpOnFlagSequence();});},3000);
+    }
+
+
 
     $scope.reset = function() {
     	  $scope.gameStyle = 'block';
         $scope.floorStyle = -1;
         $scope.bushStyle = 680;
         $scope.mountainStyle = 20; 
-        $scope.castleStyle = 1400;
-        $scope.flagLeftStyle = 1250;
+        $scope.castleStyle = 1475;
+        $scope.flagLeftStyle = 1320;
         $scope.flagBottomStyle = 350;
-        $scope.flagPoleStyle = 1225;
+        $scope.flagPoleStyle = 1300;
         if ($scope.game.win == true) {
           $scope.game.move = 0;
           $scope.timeCountdown = 10;
@@ -350,6 +358,7 @@ angular.module('marioTicTacToe', ['firebase'])
              $scope.game.board[i][j] = "";
              //have to figure out a way to make each cell have its own class
              $scope.boardClass = "gameBoardHover";
+            }
           }
          if ($scope.game.wins[0] + $scope.game.wins[1] + 1 == 0) {
          	$scope.world = $scope.game.world;
@@ -366,21 +375,21 @@ angular.module('marioTicTacToe', ['firebase'])
          	$scope.world = $scope.game.world;
           $scope.level = $scope.game.level;
          }
-     //   if (!$scope.game.timeClicked) {
-	    //   $scope.timer = setInterval( function() {
-     //      $scope.$apply(function() {
-	    // 			$scope.game.timeCount--;
-	    // 			$scope.game.timeClicked = true;
-	    // 			$scope.timeCountdown = $scope.game.timeCount;
-	    // 			if ($scope.game.timeCount <= 0) {
-	    // 				if ($scope.game.filler == "X") {
-	    // 					$scope.player1Wins();
-	    // 				}
-    	// 				else {
-    	// 					$scope.player2Wins();
-    	// 				}
-	    // 			}
-					// });}, 1000);   
+       if (!$scope.game.timeClicked) {
+	      $scope.timer = setInterval( function() {
+          $scope.$apply(function() {
+	    			$scope.game.timeCount--;
+	    			$scope.game.timeClicked = true;
+	    			$scope.timeCountdown = $scope.game.timeCount;
+	    			if ($scope.game.timeCount <= 0) {
+	    				if ($scope.game.filler == "X") {
+	    					$scope.player1Wins();
+	    				}
+    					else {
+    						$scope.player2Wins();
+    					}
+	    			}
+					});}, 1000);   
 		    }
     }
 
