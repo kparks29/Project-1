@@ -3,44 +3,45 @@ angular.module('marioTicTacToe', ['firebase'])
 
 
 
-    // var ticTacRef = new Firebase('https://mariotictactoe.firebaseio.com/'); 
-    // $scope.fbRoot = $firebase(ticTacRef);
+    var ticTacRef = new Firebase('https://mariotictactoe.firebaseio.com/'); 
+    $scope.fbRoot = $firebase(ticTacRef);
 
-    // $scope.fbRoot.$on('loaded', function() {
-    //   var IDs = $scope.fbRoot.$getIndex();
-    //   if(IDs.length == 0) {
-    //     $scope.fbRoot.$add({ 
-    //       cycle: 0,
-    //       move: 0,
-    //       up: 60,
-    //       endMove: [],
-    //       go: false,
-    //       timeCount: 10,
-    //       timeClicked: false,
-    //       world: 1,
-    //       level: 1,
-    //       counter: 0,
-    //       filler: "O",
-    //       win: false,
-    //       wins: [0,0],
-    //       board: [["T","I","C"],["T","A","C"],["T","O","E"]]
-    //     });
-    //     $scope.fbRoot.$on('change', function() {
-    //       IDs = $scope.fbRoot.$getIndex();
-    //       $scope.game = $scope.fbRoot.$child(IDs[0]);
-    //     });
-    //   } 
-    //   else 
-    //   {
-    //     $scope.game = $scope.fbRoot.$child(IDs[0]);
-    //   }
-    // });
+    $scope.fbRoot.$on('loaded', function() {
+      var IDs = $scope.fbRoot.$getIndex();
+      if(IDs.length == 0) {
+        $scope.fbRoot.$add({ 
+          move: 0,
+          up: 60,
+          endMove: [],
+          go: false,
+          timeCount: 10,
+          timeClicked: false,
+          world: 1,
+          level: 1,
+          counter: 0,
+          filler: "O",
+          win: false,
+          wins: [0,0],
+          board: [["T","I","C"],["T","A","C"],["T","O","E"]]
+        });
+        $scope.fbRoot.$on('change', function() {
+          IDs = $scope.fbRoot.$getIndex();
+          $scope.game = $scope.fbRoot.$child(IDs[0]);
+        });
+      } 
+      else 
+      {
+        $scope.game = $scope.fbRoot.$child(IDs[0]);
+      }
+    });
+    $scope.clickSound = new Audio('sounds/smw_coin.wav');
+    $scope.winnerSound = new Audio('sounds/winner.wav');
+    $scope.resetSound = new Audio('sounds/reset.wav');
 
 
 
 
   $scope.game = {
-    cycle: 0,
     move: 0,
     up: 60,
     endMove: [],
@@ -57,14 +58,13 @@ angular.module('marioTicTacToe', ['firebase'])
     win: false,
     wins: [0,0],
     board: [["T","I","C"],["T","A","C"],["T","O","E"]]
-  }
+  };
 
 
-// $scope.clickSound = new Audio('sounds/smw_coin.wav'),
-// $scope.winnerSound = new Audio('sounds/winner.wav'),
-// $scope.resetSound = new Audio('sounds/reset.wav'),
+
 
 //will run reset right away instead of loading these variables
+  $scope.cycle = 0;
   $scope.resetClass = "coinBox";
   $scope.resetText = "?";
   $scope.turn = "MARIO";
@@ -94,26 +94,29 @@ angular.module('marioTicTacToe', ['firebase'])
   $scope.flagPoleStyle = 1300;
 
 
+  $scope.marioPosition = function() {
+    switch ($scope.cycle) {
+        case 0:
+          $scope.marioBgStyle = "-129px 0";
+          $scope.cycle++;
+          break;
+        case 1:
+          $scope.marioBgStyle = "-86px 0";
+          $scope.cycle++;
+          break;
+        case 2:
+          $scope.marioBgStyle = "-50px 0";
+          $scope.cycle++;
+          break;
+        case 3:
+          $scope.marioBgStyle = "-225px 0";
+          $scope.cycle = 0;
+          break;
+      }
+  }
 
 	$scope.walk = function() {
-			 switch ($scope.game.cycle) {
-				case 0:
-					$scope.marioBgStyle = "-129px 0";
-					$scope.game.cycle++;
-					break;
-				case 1:
-					$scope.marioBgStyle = "-86px 0";
-					$scope.game.cycle++;
-					break;
-				case 2:
-					$scope.marioBgStyle = "-50px 0";
-					$scope.game.cycle++;
-					break;
-				case 3:
-					$scope.marioBgStyle = "-225px 0";
-					$scope.game.cycle = 0;
-					break;
-			}
+			$scope.marioPosition();
 
 		 	if ($scope.game.move > 260) {
 		 		$scope.marioBgStyle = "-129px 0";
@@ -146,18 +149,20 @@ angular.module('marioTicTacToe', ['firebase'])
 
     $scope.resetClick = function(){
         $scope.resetText = 'RESET';
-        $scope.game.resetSound.play();
+        $scope.resetSound.play();
         $scope.reset();
+        $scope.game.$save();
     }
     
     $scope.boardClickHandler = function(i, j) {
       if ($scope.game.board[i][j] == "" && $scope.game.win == false) {
-          $scope.game.clickSound.play();
+          $scope.clickSound.play();
           $scope.togglePlayer();
           $scope.game.board[i][j] = $scope.game.filler;
           $scope.game.boardClass = "";
           $scope.game.counter++;
           $scope.game.timeCount = 10;
+          $scope.game.$save();
           $scope.checkWin();
       } 
     }
@@ -220,24 +225,7 @@ angular.module('marioTicTacToe', ['firebase'])
     }
 
   $scope.marioGoInCastle = function () {
-    switch ($scope.game.cycle) {
-        case 0:
-          $scope.marioBgStyle = "-129px 0";
-          $scope.game.cycle++;
-          break;
-        case 1:
-          $scope.marioBgStyle = "-86px 0";
-          $scope.game.cycle++;
-          break;
-        case 2:
-          $scope.marioBgStyle = "-50px 0";
-          $scope.game.cycle++;
-          break;
-        case 3:
-          $scope.marioBgStyle = "-225px 0";
-          $scope.game.cycle = 0;
-          break;
-      }
+     $scope.marioPosition();
       //figure out offsets
      if ($scope.marioLeftStyle > $scope.castleStyle + 60) {
       $scope.marioBgStyle = "-225px 0";
@@ -264,7 +252,7 @@ angular.module('marioTicTacToe', ['firebase'])
       }
       else {
         $scope.game.up -= 20;
-         $scope.flagBottomStyle = $scope.game.up + 40;
+        $scope.flagBottomStyle = $scope.game.up + 40;
         $scope.marioBottomStyle = $scope.game.up;
         setTimeout(function() {$scope.$apply(function(){$scope.slideDownFlag()});}, 100);
       }
@@ -273,24 +261,7 @@ angular.module('marioTicTacToe', ['firebase'])
 
 
   $scope.jumpOnFlagSequence = function () {
-    switch ($scope.game.cycle) {
-        case 0:
-          $scope.marioBgStyle = "-129px 0";
-          $scope.game.cycle++;
-          break;
-        case 1:
-          $scope.marioBgStyle = "-86px 0";
-          $scope.game.cycle++;
-          break;
-        case 2:
-          $scope.marioBgStyle = "-50px 0";
-          $scope.game.cycle++;
-          break;
-        case 3:
-          $scope.marioBgStyle = "-225px 0";
-          $scope.game.cycle = 0;
-          break;
-      }
+    $scope.marioPosition();
 
       if ($scope.marioLeftStyle > $scope.flagLeftStyle - 11) {
         $scope.slideDownFlag();
@@ -332,30 +303,13 @@ angular.module('marioTicTacToe', ['firebase'])
       $scope.castleStyle = $scope.game.endMove[3];
       $scope.flagLeftStyle = $scope.game.endMove[4];
       $scope.flagPoleStyle = $scope.game.endMove[5]; 
-      switch ($scope.game.cycle) {
-        case 0:
-          $scope.marioBgStyle = "-129px 0";
-          $scope.game.cycle++;
-          break;
-        case 1:
-          $scope.marioBgStyle = "-86px 0";
-          $scope.game.cycle++;
-          break;
-        case 2:
-          $scope.marioBgStyle = "-50px 0";
-          $scope.game.cycle++;
-          break;
-        case 3:
-          $scope.marioBgStyle = "-225px 0";
-          $scope.game.cycle = 0;
-          break;
-      }
+      $scope.marioPosition();
     } 
      });}, 50);
   } 
 
     $scope.gameOver = function () {
-        $scope.game.winnerSound.play();
+        $scope.winnerSound.play();
         $scope.resetText = 'NEW GAME';
         for (var i=0;i<$scope.game.board.length;i++){
           for (var j=0;j<$scope.game.board[i].length;j++) {
