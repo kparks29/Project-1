@@ -20,10 +20,29 @@ angular.module('marioTicTacToe', ['firebase'])
     wins: [0,0],
     board: [["T","I","C"],["T","A","C"],["T","O","E"]]
   }
-
+//will run reset right away instead of loading these variables
   $scope.resetClass = "coinBox";
   $scope.resetText = "?";
   $scope.turn = "MARIO";
+  $scope.score1 = 0;
+  $scope.score2 = 0;
+  $scope.world = 1;
+  $scope.level = 1;
+  $scope.timeCountdown = 10;
+  $scope.cloudLeft1 = 150;
+  $scope.cloudTop1 = 110;
+  $scope.cloudLeft2 = 1300;
+  $scope.cloudTop2 = 80;
+  $scope.cloudLeft3 = 750;
+  $scope.cloudTop3 = 200;
+  $scope.cloudLeft4 = 400;
+  $scope.cloudTop4 = 280;
+  $scope.floorStyle = 0;
+  $scope.marioBottomStyle = 60;
+  $scope.marioDisplayStyle = 'block';
+  $scope.resetStyle = 'block';
+  $scope.bushStyle = 680;
+
 
 
 	$scope.walk = function() {
@@ -79,7 +98,7 @@ angular.module('marioTicTacToe', ['firebase'])
     $scope.resetClick = function(){
         $scope.resetText = 'RESET';
         $scope.game.resetSound.play();
-        //$scope.reset();
+        $scope.reset();
     }
     
     //figureout how to make a cell click handler using ng-click
@@ -253,19 +272,19 @@ angular.module('marioTicTacToe', ['firebase'])
 //           $scope.game.endMove[i] -= 10;
 //         }
 //       }
-//       $scope.floorStyle = "left: " + $scope.game.endMove[0] + "px";
-//       $scope.bush.bushStyle = "left: " + $scope.game.endMove[1] + "px";
-//       $scope.mountain.mountainStyle = "left: " + $scope.game.endMove[2] + "px"; 
-//       $scope.castle.castleStyle = "left: " + $scope.game.endMove[3] + "px";
-//       $scope.flag.flagLeftStyle = "left: " + $scope.game.endMove[4] + "px";
-//       $scope.flagPole.flagPoleStyle = "left: " + $scope.game.endMove[5] + "px"; 
+//       $scope.floorStyle = $scope.game.endMove[0];
+//       $scope.bush.bushStyle = $scope.game.endMove[1];
+//       $scope.mountain.mountainStyle = $scope.game.endMove[2]; 
+//       $scope.castle.castleStyle = $scope.game.endMove[3];
+//       $scope.flag.flagLeftStyle = $scope.game.endMove[4];
+//       $scope.flagPole.flagPoleStyle = $scope.game.endMove[5]; 
 //       switch ($scope.game.cycle) {
 //         case 0:
-//           $scope.marioBgStyle = "background-position: -129px 0";
+//           $scope.marioBgStyle = "-129px 0";
 //           $scope.game.cycle++;
 //           break;
 //         case 1:
-//           $scope.marioBgStyle = "background-position: -86px 0";
+//           $scope.marioBgStyle = "-86px 0";
 //           $scope.game.cycle++;
 //           break;
 //         case 2:
@@ -297,104 +316,136 @@ angular.module('marioTicTacToe', ['firebase'])
 //         clearInterval($scope.timer);
 //         $scope.game.timeClicked = false;
 //         $scope.resetStyle = "display: none";
-//         $scope.gameStyle = "display: none";
+//         $scope.gameStyle = none;
 //         $scope.endGameSequence();
 //         setTimeout(function(){$scope.$apply(function(){clearInterval($scope.endGameTimer);$scope.jumpOnFlagSequence();});},3000);
 //     }
 
-//     $scope.reset = function() {
-//     	  $scope.gameStyle = "display: block";
-//         $scope.floorStyle = "left: -1px";
-//         $scope.bushStyle = "left: 680px";
-//         $scope.mountainStyle = "left: 20px"; 
-//         $scope.castleStyle = "left: 115%";
-//         $scope.flagLeftStyle = "left: 101.5%";
-//         $scope.flagBottomStyle = "bottom: 350px";
-//         $scope.flagPoleStyle = "left: 100%";
-//         if ($scope.game.win == true) {
-//           $scope.game.move = 0;
-//           $scope.resetText = "?";
-//           $scope.resetClass = "coinBox"
-//           $scope.marioClass = "";
-//           $scope.marioLeftStyle = "left: "+move + "px"; 
-//           $scope.marioDisplayStyle = "display:block;";
-//           $scope.walk();
-//         }
-//          $scope.game.board = [["","",""],["","",""],["","",""]];
-//          $scope.game.win = false;
-//          $scope.game.counter = 0;
-//          $scope.game.filler = "O";
-//          $scope.game.timeCount = 10;
-//          $scope.turn = "MARIO";
-//          for (var i=0;i<$scope.game.board.length;i++){
-//           for(var j=0;j<$scope.game.board[i].length;j++)
-//             $scope.game.board[i][j] = "";
+    $scope.reset = function() {
+    	  $scope.gameStyle = 'block';
+        $scope.floorStyle = -1;
+        $scope.bushStyle = 680;
+        $scope.mountainStyle = 20; 
+        $scope.castleStyle = 1400;
+        $scope.flagLeftStyle = 1250;
+        $scope.flagBottomStyle = 350;
+        $scope.flagPoleStyle = 1225;
+        if ($scope.game.win == true) {
+          $scope.game.move = 0;
+          $scope.timeCountdown = 10;
+          $scope.resetText = "?";
+          $scope.resetClass = "coinBox"
+          $scope.marioClass = "";
+          $scope.marioLeftStyle = $scope.game.move; 
+          $scope.marioDisplayStyle = 'block';
+          $scope.walk();
+        }
+         $scope.game.win = false;
+         $scope.game.counter = 0;
+         $scope.game.filler = "O";
+         $scope.game.timeCount = 10;
+         $scope.turn = "MARIO";
+         for (var i=0;i<$scope.game.board.length;i++){
+           for(var j=0;j<$scope.game.board[i].length;j++) {
+             $scope.game.board[i][j] = "";
+             //have to figure out a way to make each cell have its own class
+             $scope.boardClass = "gameBoardHover";
+          }
+         if ($scope.game.wins[0] + $scope.game.wins[1] + 1 == 0) {
+         	$scope.world = $scope.game.world;
+         $scope.level = $scope.game.level;
+         }
+         else {
+         	if ($scope.game.level >= 8) {
+         		$scope.game.level = ($scope.game.level + 1) - (8 * $scope.game.world);
+         		$scope.game.world++;
+         	}
+         	else {
+         		$scope.game.level = ($scope.game.wins[0] + $scope.game.wins[1] + 1);
+         	}
+         	$scope.world = $scope.game.world;
+          $scope.level = $scope.game.level;
+         }
+     //   if (!$scope.game.timeClicked) {
+	    //   $scope.timer = setInterval( function() {
+     //      $scope.$apply(function() {
+	    // 			$scope.game.timeCount--;
+	    // 			$scope.game.timeClicked = true;
+	    // 			$scope.timeCountdown = $scope.game.timeCount;
+	    // 			if ($scope.game.timeCount <= 0) {
+	    // 				if ($scope.game.filler == "X") {
+	    // 					$scope.player1Wins();
+	    // 				}
+    	// 				else {
+    	// 					$scope.player2Wins();
+    	// 				}
+	    // 			}
+					// });}, 1000);   
+		    }
+    }
 
-//           //possible error
-//             $scope.game.boardClass[i][j] = "gameBoardHover";
-//          }
-//          if ($scope.game.wins[0] + $scope.game.wins[1] + 1 == 0) {
-//          	$scope.world = $scope.game.world;
-//           $scope.level = $scope.game.level;
-//          }
-//          else {
-//          	if ($scope.game.level >= 8) {
-//          		$scope.game.level = ($scope.game.level + 1) - (8 * $scope.game.world);
-//          		$scope.game.world++;
-//          	}
-//          	else {
-//          		$scope.game.level = ($scope.game.wins[0] + $scope.game.wins[1] + 1);
-//          	}
-//          	$scope.world = $scope.game.world;
-//           $scope.level = $scope.game.level;
-//          }
-//        if (!$scope.game.timeClicked) {
-// 	      $scope.timer = setInterval( function() {
-//           $scope.$apply(function() {
-// 	    			$scope.game.timeCount--;
-// 	    			$scope.game.timeClicked = true;
-// 	    			$scope.timeCountdown = $scope.game.timeCount;
-// 	    			if ($scope.game.timeCount <= 0) {
-// 	    				if ($scope.game.filler == "X") {
-// 	    					$scope.player1Wins();
-// 	    				}
-//     					else {
-//     						$scope.player2Wins();
-//     					}
-// 	    			}
-// 					});}, 1000);   
-// 		    }
-//     }
-//   $scope.cloudMover = function() {
-//   	$scope.clouds = setInterval( function() {
-//       $scope.$apply(function(){
 
-// 	  	//for(var i=0;i<4;i++) {
-//         //fix conditional statement
-// 	  		//if (cloud[i].offsetLeft + cloud[i].offsetWidth <= 0) {
-// 	    		//$scope.cloudLeft[i] = "left: " + body.offsetWidth; //fix offsetWidth
-// 	    		$scope.cloudTop1 = "top: " + Math.floor(Math.random()*300 + 100);
-//           $scope.cloudTop2 = "top: " + Math.floor(Math.random()*300 + 100);
-//           $scope.cloudTop3 = "top: " + Math.floor(Math.random()*300 + 100);
-//           $scope.cloudTop4 = "top: " + Math.floor(Math.random()*300 + 100);
+  $scope.cloudMover = function() {
+  	$scope.clouds = setInterval( function() {
+      $scope.$apply(function(){
+  	  	if(($scope.cloudLeft1 + 75) <= 0){
+             $scope.cloudLeft1 = 1300;
+             $scope.cloudTop1 = Math.floor(Math.random()*300 + 100);
+        }
+        else {
+          $scope.cloudLeft1 -= 2;
+        }
+        if ($scope.cloudLeft2 + 75 <= 0) {
+          $scope.cloudLeft2 = 1300;
+          $scope.cloudTop2 = Math.floor(Math.random()*300 + 100);
+        }
+        else {
+          $scope.cloudLeft2 -= 2;
+        }
+        if ($scope.cloudLeft3 + 75 <= 0) {
+          $scope.cloudLeft3 = 1300;
+          $scope.cloudTop3 = Math.floor(Math.random()*300 + 100);
+        }
+        else {
+          $scope.cloudLeft3 -= 2;
+        }
+        if ($scope.cloudLeft4 + 225 <= 0) {
+          $scope.cloudLeft4 = 1300;
+          $scope.cloudTop4 = Math.floor(Math.random()*300 + 100);
+        }
+        else {
+          $scope.cloudLeft4 -= 1;
+        }	
+		});}, 50);   
+	}
 
-// 	    	// }
-// 	    	// else {
-//       //     if (i == 3){
-//       //       $scope.cloudLeft[i] = "left: " + cloud[i].offsetLeft - 1;
-//       //     }
-//       //     else {
-//       //       $scope.cloudLeft[i] = "left: " + cloud[i].offsetLeft - 2;
-//       //     }
-// 		    // }
-	  	
-// 		});}, 50);   
-// 	}
-//document.getElementById('mario').offsetLeft
-// //need to test
-  
-
-//   //$scope.walk();
-//   //$scope.cloudMover();
 });
 
+
+
+// angular.module('TicTacToe', ['firebase'])
+//   .controller('TicTacToeCtrl', function($scope, $firebase) {
+//     var numRows = 6;
+//     var numColumns = 7;
+//     var ticTacRef = new Firebase(''); //https://intense-fire-XXXX.firebaseio.com
+//     $scope.fbRoot = $firebase(ticTacRef);
+
+//     $scope.fbRoot.$on('loaded', function() {
+//       var IDs = $scope.fbRoot.$getIndex();
+//       if(IDs.length == 0) {
+//         $scope.fbRoot.$add({ 
+//           board: [],
+//           xTurn: true
+//         });
+//         $scope.fbRoot.$on('change', function() {
+//           IDs = $scope.fbRoot.$getIndex();
+//           $scope.obj = $scope.fbRoot.$child(IDs[0]);
+//         });
+//       } else {
+//         $scope.obj = $scope.fbRoot.$child(IDs[0]);
+//       }
+//     }
+
+//     $scope.makeMove = function(i, j) {  // or function(i) if using one dimensional board
+//     }
+//   }

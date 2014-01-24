@@ -7,60 +7,7 @@
 	<script src="https://cdn.firebase.com/libs/angularfire/0.6.0/angularfire.min.js"></script>
 	<script src="js/script.js"></script>
 </head>
-<body offsets class="coinCursor" id="body" x-ng-app="marioTicTacToe" x-ng-controller="MainCtrl" x-ng-init="walk();">
-	<div id="app">
-		<div id='userInfo'>
-			<div id='player1'>
-				<span id='name1'>MARIO</span><br />
-				<span id='score1'>WINS = </span>
-			</div>
-			<div id='player2'>
-				<span id='name2'>LUIGI</span><br />
-				<span id='score2'>WINS = </span>
-			</div>
-			<div id="level">
-				WORLD<br />
-				<span id="world"> - </span>
-			</div>
-			<div id="who">
-				TURN<br />
-				<span id="turn">{{turn}}</span>
-			</div>
-			<div id="timer">
-				TIME<br />
-				<span id='time'></span>
-			</div>
-		</div>
-		<div class="clear"></div>
-		<div id="spaceHolder"></div>
-		<div id='game'>
-			<div id="gameBoard">
-				<div x-ng-repeat="row in game.board track by $index" id="row{{$index}}">
-					<div x-ng-repeat="cell in row" id="cell{{$parent.$index}}{{$index}}">{{game.board[$parent.$index][$index]}}</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div id="begin" class="{{resetClass}}" x-ng-click="resetClick();">{{resetText}}</div>
-	<div offsets id="mario" class="{{marioClass}}" style="left: {{marioLeftStyle}}px; background-position: {{marioBgStyle}};"></div>
-	<div id="reg"></div>
-	<div id="cloud"></div>
-	<div id="cloud2"></div>
-	<div id="cloud3"></div>
-	<div id="cloudCluster"></div>
-	<div id="mountain"></div>
-	<div id="castle"></div>
-	<div id="flag"></div>
-	<div id="flagPole"></div>
-
-</body>
-</html>
-
-
-
-
-<!-- 
-<body offsets class="coinCursor" id="body" x-ng-app="marioTicTacToe" x-ng-controller="MainCtrl" x-ng-init="walk();">
+<body offsets class="coinCursor" id="body" x-ng-app="marioTicTacToe" x-ng-controller="MainCtrl" x-ng-init="walk();cloudMover();">
 	<div id="app">
 		<div id='userInfo'>
 			<div id='player1'>
@@ -77,7 +24,7 @@
 			</div>
 			<div id="who">
 				TURN<br />
-				<span id="turn"></span>
+				<span id="turn">{{turn}}</span>
 			</div>
 			<div id="timer">
 				TIME<br />
@@ -86,22 +33,35 @@
 		</div>
 		<div class="clear"></div>
 		<div id="spaceHolder"></div>
-		<div id='game' x-ng-style="{{gameStyle}}">
+		<div id='game' style="display: {{gameStyle}}">
 			<div id="gameBoard">
-				<div x-ng-repeat="row in board track by $index" id="row{{$index}}">
-					<div x-ng-repeat="cell in row" id="cell{{$parent.$index}}{{$index}}" class="{{boardClass[$parent.$index][$index]}}" x-ng-click="boardClickHandler($parent.$index, $index);">{{board[$parent.$index][$index]}}</div>
+				<div x-ng-repeat="row in game.board track by $index" id="row{{$index}}">
+					<div x-ng-repeat="cell in row track by $index" id="cell{{$parent.$index}}{{$index}}" x-ng-click="boardClickHandler($parent.$index, $index);" class="{{boardClass}}">{{game.board[$parent.$index][$index]}}</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div offsets id="begin"   x-ng-style="{{resetStyle}};"></div>
-	<div offsets id="mario" x-ng-style="{{marioBottomStyle}};{{marioDisplayStyle}};" ></div>
-	<div offsets id="reg" x-ng-style="{{floorStyle}}"></div>
-	<div offsets id="cloud" x-ng-style="{{cloudLeft[0]}};{{cloudTop1}};"></div>
-	<div offsets id="cloud2" x-ng-style="{{cloudLeft[1]}};{{cloudTop2}};"></div>
-	<div offsets id="cloud3" x-ng-style="{{cloudLeft[2]}};{{cloudTop3}};"></div>
-	<div offsets id="cloudCluster" x-ng-style="{{cloudLeft[3]}};{{cloudTop4}};"></div>
-	<div offsets id="bush" x-ng-style="{{bushStyle}}"></div>
+	<div id="begin" class="{{resetClass}}" x-ng-click="resetClick();" style="display: {{resetStyle}};">{{resetText}}</div>
+	<div offsets id="mario" class="{{marioClass}}" style="bottom: {{marioBottomStyle}}px; display: {{marioDisplayStyle}};left: {{marioLeftStyle}}px; background-position: {{marioBgStyle}};"></div>
+	<div id="reg" style="{{floorStyle}}"></div>
+	<div offsets id="cloud" style="left: {{cloudLeft1}}px; top: {{cloudTop1}}px;"></div>
+	<div offsets id="cloud2" style="left: {{cloudLeft2}}px; top: {{cloudTop2}}px;"></div>
+	<div offsets id="cloud3" style="left: {{cloudLeft3}}px; top: {{cloudTop3}}px;"></div>
+	<div offsets id="cloudCluster" style="left: {{cloudLeft4}}px; top: {{cloudTop4}}px;"></div>
+	<div offsets id="bush" style="left: {{bushStyle}}px;"></div>
+	<div id="mountain"></div>
+	<div id="castle"></div>
+	<div id="flag"></div>
+	<div id="flagPole"></div>
+
+</body>
+</html>
+
+
+
+
+<!-- 
+	
 	<div offsets id="mountain" x-ng-style="{{mountainStyle}}"></div>
 	<div offsets id="castle" x-ng-style="{{castleStyle}}"></div>
 	<div offsets id="flag" x-ng-style="{{flagLeftStyle}};{{flagBottomStyle}};"></div>
