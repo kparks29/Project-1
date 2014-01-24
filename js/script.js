@@ -94,6 +94,10 @@ angular.module('marioTicTacToe', ['firebase'])
   $scope.flagPoleStyle = 1300;
 
 
+  // $scope.welcomeScreen = function() {
+  //   $scope.walk()
+  // }
+
   $scope.marioPosition = function() {
     switch ($scope.cycle) {
         case 0:
