@@ -7,8 +7,8 @@
 	<script src="https://cdn.firebase.com/libs/angularfire/0.6.0/angularfire.min.js"></script>
 	<script src="js/script.js"></script>
 </head>
-<body offsets class="coinCursor" id="body" x-ng-app="marioTicTacToe" x-ng-controller="MainCtrl" x-ng-init="walk();cloudMover();">
-	<div id="app">
+<body offsets class="coinCursor" id="body" x-ng-app="marioTicTacToe" x-ng-controller="MainCtrl" x-ng-init="welcomeScreen();" x-ng-keydown="keyPressed($event)">
+	<div id="app" x-ng-class="{'show': showSelection[7], 'hide': !showSelection[7]}">
 		<div id='userInfo'>
 			<div id='player1'>
 				<span id='name1'>MARIO</span><br />
@@ -53,6 +53,21 @@
 	<div id="castle" style="left: {{castleStyle}}px"></div>
 	<div id="flag" style="left: {{flagLeftStyle}}px; bottom: {{flagBottomStyle}}px;"></div>
 	<div id="flagPole" style="left: {{flagPoleStyle}}px"></div>
+	<div id="welcomeScreen" x-ng-class="{'show': showSelection[0], 'hide': !showSelection[0]}">
+		<div><h1>SUPER MARIO</h1><span>TIC TAC TOE</span></div>
+		<div id="gameStyle" x-ng-class="{'show': showSelection[1]}">
+			<ul>
+				<li x-ng-click="welcomeScreenMouseClick(2);" x-ng-class="{'show': showSelection[2], 'hide': !showSelection[2]}">1 PLAYER   {{selector[2]}}</li>
+				<li x-ng-click="welcomeScreenMouseClick(3);" x-ng-class="{'show': showSelection[3], 'hide': !showSelection[3]}">2 PLAYERS {{selector[3]}}</li>
+				<li x-ng-click="welcomeScreenMouseClick(4);" x-ng-class="{'show': showSelection[4], 'hide': !showSelection[4]}">PASS-N-PLAY {{selector[4]}}</li>
+				<li x-ng-click="welcomeScreenMouseClick(5);" x-ng-class="{'show': showSelection[5], 'hide': !showSelection[5]}">ONLINE      {{selector[5]}}</li>
+			</ul>
+		</div>
+		<div id="waitingForPlayer" x-ng-class="{'show': showSelection[6], 'hide': !showSelection[6]}">
+			<div>PLAYER 1 - {{player1Ready}}</div>
+			<div>PLAYER 2 - {{player2Ready}}</div>
+		</div>
+	</div>
 
 </body>
 </html>
