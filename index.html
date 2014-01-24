@@ -24,7 +24,7 @@
 			</div>
 			<div id="who">
 				TURN<br />
-				<span id="turn"></span>
+				<span id="turn">{{turn}}</span>
 			</div>
 			<div id="timer">
 				TIME<br />
@@ -35,14 +35,14 @@
 		<div id="spaceHolder"></div>
 		<div id='game'>
 			<div id="gameBoard">
-				<div x-ng-repeat="row in board track by $index" id="row{{$index}}">
-					<div x-ng-repeat="cell in row" id="cell{{$parent.$index}}{{$index}}">{{board[$parent.$index][$index]}}</div>
+				<div x-ng-repeat="row in game.board track by $index" id="row{{$index}}">
+					<div x-ng-repeat="cell in row" id="cell{{$parent.$index}}{{$index}}">{{game.board[$parent.$index][$index]}}</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div id="begin" class="coinBox"></div>
-	<div id="mario" style="left: {{marioLeftStyle}}px; background-position: {{marioBgStyle}};"></div>
+	<div id="begin" class="{{resetClass}}" x-ng-click="resetClick();">{{resetText}}</div>
+	<div offsets id="mario" class="{{marioClass}}" style="left: {{marioLeftStyle}}px; background-position: {{marioBgStyle}};"></div>
 	<div id="reg"></div>
 	<div id="cloud"></div>
 	<div id="cloud2"></div>
@@ -52,19 +52,14 @@
 	<div id="castle"></div>
 	<div id="flag"></div>
 	<div id="flagPole"></div>
+
 </body>
 </html>
 
 
-<!-- <html>
-<head>
-	<title></title>
-	<link type="text/css" rel="stylesheet" href="css/style.css"></link>
-	<script src="js/lib/angular.min.js"></script>
-	<script src="https://cdn.firebase.com/v0/firebase.js"></script>
-	<script src="https://cdn.firebase.com/libs/angularfire/0.6.0/angularfire.min.js"></script>
-	<script src="js/script.js"></script>
-</head>
+
+
+<!-- 
 <body offsets class="coinCursor" id="body" x-ng-app="marioTicTacToe" x-ng-controller="MainCtrl" x-ng-init="walk();">
 	<div id="app">
 		<div id='userInfo'>
@@ -82,7 +77,7 @@
 			</div>
 			<div id="who">
 				TURN<br />
-				<span id="turn">{{turn}}</span>
+				<span id="turn"></span>
 			</div>
 			<div id="timer">
 				TIME<br />
@@ -99,8 +94,8 @@
 			</div>
 		</div>
 	</div>
-	<div offsets id="begin" class="coinBox {{resetClass}}" x-ng-click="resetClick();" x-ng-style="{{resetStyle}};">{{resetText}}</div>
-	<div offsets id="mario" x-ng-style="{{marioLeftStyle}};" class="{{marioClass}}"></div>
+	<div offsets id="begin"   x-ng-style="{{resetStyle}};"></div>
+	<div offsets id="mario" x-ng-style="{{marioBottomStyle}};{{marioDisplayStyle}};" ></div>
 	<div offsets id="reg" x-ng-style="{{floorStyle}}"></div>
 	<div offsets id="cloud" x-ng-style="{{cloudLeft[0]}};{{cloudTop1}};"></div>
 	<div offsets id="cloud2" x-ng-style="{{cloudLeft[1]}};{{cloudTop2}};"></div>
@@ -115,4 +110,5 @@
 </html> -->
 
 
-<!-- {{marioBgStyle}};{{marioBottomStyle}};{{marioDisplayStyle}}; -->
+
+<!--  -->

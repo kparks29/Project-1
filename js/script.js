@@ -21,14 +21,15 @@ angular.module('marioTicTacToe', ['firebase'])
     board: [["T","I","C"],["T","A","C"],["T","O","E"]]
   }
 
-
+  $scope.resetClass = "coinBox";
+  $scope.resetText = "?";
+  $scope.turn = "MARIO";
 
 
 	$scope.walk = function() {
 			 switch ($scope.game.cycle) {
 				case 0:
 					$scope.marioBgStyle = "-129px 0";
-          console.log($scope.marioBgStyle);
 					$scope.game.cycle++;
 					break;
 				case 1:
@@ -46,27 +47,27 @@ angular.module('marioTicTacToe', ['firebase'])
 			}
 
       //need to find out how to call offsetleft
-		// 	if (mario.offsetLeft > 260) {
-		// 		$scope.marioBgStyle = "-129px 0";
-		// 		$scope.marioClass = "jump";
-		// 		$scope.resetClass = "bounce";
-		// 		setTimeout(function() {$scope.$apply(function(){$scope.marioBgStyle = "-225px 0";});}, 1000);
-		// 		setTimeout(function() {$scope.$apply(function(){$scope.resetClass = "startgamebutton"; $scope.resetText = "";});}, 1000);
-		// 		setTimeout(function() {$scope.$apply(function(){$scope.resetClass= "button"; 
-  //       if ($scope.game.wins[0] + $scope.game.wins[1] > 0) {
-  //         $scope.resetText = "RESET";
-  //       }
-  //       else {
-  //         $scope.resetText = "START GAME";
-  //       }
-  //     });}, 1400);
+		 	if ($scope.game.move > 260) {
+		 		$scope.marioBgStyle = "-129px 0";
+		 		$scope.marioClass = "jump";
+		 		$scope.resetClass = "coinBox bounce";
+		 		setTimeout(function() {$scope.$apply(function(){$scope.marioBgStyle = "-225px 0";});}, 1000);
+		 		setTimeout(function() {$scope.$apply(function(){$scope.resetClass = "startgamebutton"; $scope.resetText = "";});}, 1000);
+		 		setTimeout(function() {$scope.$apply(function(){$scope.resetClass= "button"; 
+         if ($scope.game.wins[0] + $scope.game.wins[1] > 0) {
+          $scope.resetText = "RESET";
+        }
+        else {
+          $scope.resetText = "START GAME";
+        }
+       });}, 1400);
 
-		// 	}
-		// else {
+		   	}
+		 else {
 			$scope.game.move += 20;
 			$scope.marioLeftStyle = $scope.game.move;
 			setTimeout(function() {$scope.$apply(function(){$scope.walk()});}, 100);
-		//}
+		}
 		
 	}
 
@@ -75,31 +76,31 @@ angular.module('marioTicTacToe', ['firebase'])
 	
 
 
-//     $scope.resetClick = function(){
-//         $scope.resetText = 'RESET';
-//         $scope.game.resetSound.play();
-//         $scope.reset();
-//     }
+    $scope.resetClick = function(){
+        $scope.resetText = 'RESET';
+        $scope.game.resetSound.play();
+        //$scope.reset();
+    }
     
-//     //figureout how to make a cell click handler using ng-click
-//     //this section probably doesnt work
-//     $scope.boardClickHandler = function(i, j) {
-//       if ($scope.game.board[i][j] == "" && $scope.game.win == false) {
-//           $scope.game.clickSound.play();
-//           $scope.togglePlayer();
-//           $scope.game.board[i][j] = $scope.game.filler;
-//           $scope.game.boardClass[i][j] = "";
-//           $scope.game.counter++;
-//           $scope.game.timeCount = 10;
-//           $scope.checkWin();
-//       } 
-//     }
+    //figureout how to make a cell click handler using ng-click
+    //this section probably doesnt work
+    $scope.boardClickHandler = function(i, j) {
+      if ($scope.game.board[i][j] == "" && $scope.game.win == false) {
+          $scope.game.clickSound.play();
+          $scope.togglePlayer();
+          $scope.game.board[i][j] = $scope.game.filler;
+          $scope.game.boardClass[i][j] = "";
+          $scope.game.counter++;
+          $scope.game.timeCount = 10;
+          //$scope.checkWin();
+      } 
+    }
     
 
-//     $scope.togglePlayer = function () {
-//         $scope.game.filler = (filler == "X"?"O":"X");
-//         $scope.turn = (filler == "X"?"LUIGI":"MARIO");
-//     }
+    $scope.togglePlayer = function () {
+        $scope.game.filler = (filler == "X"?"O":"X");
+        $scope.turn = (filler == "X"?"LUIGI":"MARIO");
+    }
 
 
 //     $scope.checkWin = function () {
@@ -389,28 +390,9 @@ angular.module('marioTicTacToe', ['firebase'])
 	  	
 // 		});}, 50);   
 // 	}
-
+//document.getElementById('mario').offsetLeft
 // //need to test
-//   // .directive('offsets', function() {
-//   //   return function(scope, element, attr) {
-//   //     scope.$watch(
-//   //       function() {
-//   //         return element[0].offsetWidth
-//   //       },
-//   //       function(newVal, oldVal) {
-//   //         scope.offsetwidth = element[0].offsetWidth
-//   //       }
-//   //     )
-//   //     scope.$watch(
-//   //       function() {
-//   //         return element[0].offsetLeft
-//   //       },
-//   //       function(newVal, oldVal) {
-//   //         scope.offsetleft = element[0].offsetLeft
-//   //       }
-//   //     )
-//   //   }
-//   // });
+  
 
 //   //$scope.walk();
 //   //$scope.cloudMover();

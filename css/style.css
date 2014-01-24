@@ -201,11 +201,11 @@ body {
 	float: left;
 }
 /*bottom borders for tic tac toe*/
-#gameBoard div:nth-child(4),#gameBoard div:nth-child(5),#gameBoard div:nth-child(6),#gameBoard div:nth-child(7),#gameBoard div:nth-child(8),#gameBoard div:nth-child(9) {
-	border-top: 5px solid rgba(252, 224 ,168,1);
+#gameBoard div:nth-child(1), #gameBoard div:nth-child(2) {
+	border-bottom: 5px solid rgba(252, 224 ,168,1);
 }
 /*side borders for tic tac toe*/
-#gameBoard div:nth-child(2),#gameBoard div:nth-child(3),#gameBoard div:nth-child(5),#gameBoard div:nth-child(6),#gameBoard div:nth-child(8),#gameBoard div:nth-child(9){
+#gameBoard div div:nth-child(3),#gameBoard div div:nth-child(4) {
 	border-left: 5px solid rgba(252, 224 ,168,1);
 }
 /*hover affect for cells*/
