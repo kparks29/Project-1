@@ -104,11 +104,10 @@ angular.module('marioTicTacToe', ['firebase'])
   }
 
   $scope.keyPressed = function(key) {
-    console.log(key);
-    if (key.keyCode == 13) {
+    if (key.keyCode == 13 && $scope.showSelection[0] == true) {
       $scope.chooseGameMode($scope.getSelection())
     }
-    else if (key.keyCode == 38 || key.keyCode == 40) {
+    else if ((key.keyCode == 38 || key.keyCode == 40) && $scope.showSelection[0] == true) {
       $scope.toggleSelector($scope.getSelection());
     }
   }
@@ -147,7 +146,6 @@ angular.module('marioTicTacToe', ['firebase'])
     }
   }
    $scope.toggleSelectorMouse = function(i) {
-    console.log(i);
     if (i == 2) {
       $scope.selector[i] = "<";
       $scope.selector[3] = " "
@@ -169,7 +167,7 @@ angular.module('marioTicTacToe', ['firebase'])
 
 
   $scope.welcomeScreenMouseClick = function(i) {
-        if ($scope.selector[i] == "<") {
+        if ($scope.selector[i] == "<" && $scope.showSelection[0] == true) {
           $scope.chooseGameMode(i);
         }
         else {
@@ -294,8 +292,6 @@ angular.module('marioTicTacToe', ['firebase'])
 
 
      $scope.checkWin = function () {
-
-        
         for (var i=0; i<$scope.game.board.length; i++) {
           var r=0; c=0; d1=0; d2=0; //reset checking variables
           for (var j=0; j<$scope.game.board[i].length;j++) {
