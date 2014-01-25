@@ -2,68 +2,49 @@ angular.module('marioTicTacToe', ['firebase'])
 .controller('MainCtrl', function($scope,$firebase) {	
 
 
+$scope.onlineMode = function() {
+    var ticTacRef = new Firebase('https://mariotictactoe.firebaseio.com/'); 
+    $scope.fbRoot = $firebase(ticTacRef);
 
-    // var ticTacRef = new Firebase('https://mariotictactoe.firebaseio.com/'); 
-    // $scope.fbRoot = $firebase(ticTacRef);
-
-    // $scope.fbRoot.$on('loaded', function() {
-    //   var IDs = $scope.fbRoot.$getIndex();
-    //   if(IDs.length == 0) {
-    //     $scope.fbRoot.$add({ 
-    //       move: 0,
-    //       up: 60,
-    //       endMove: [],
-    //       go: false,
-    //       timeCount: 10,
-    //       timeClicked: false,
-    //       world: 1,
-    //       level: 1,
-    //       counter: 0,
-    //       filler: "O",
-    //       win: false,
-    //       wins: [0,0],
-    //       board: [["T","I","C"],["T","A","C"],["T","O","E"]]
-    //     });
-    //     $scope.fbRoot.$on('change', function() {
-    //       IDs = $scope.fbRoot.$getIndex();
-    //       $scope.game = $scope.fbRoot.$child(IDs[0]);
-    //     });
-    //   } 
-    //   else 
-    //   {
-    //     $scope.game = $scope.fbRoot.$child(IDs[0]);
-    //   }
-    // });
-    // $scope.clickSound = new Audio('sounds/smw_coin.wav');
-    // $scope.winnerSound = new Audio('sounds/winner.wav');
-    // $scope.resetSound = new Audio('sounds/reset.wav');
+    $scope.fbRoot.$on('loaded', function() {
+      var IDs = $scope.fbRoot.$getIndex();
+      if(IDs.length == 0) {
+        $scope.fbRoot.$add({ 
+          move: 0,
+          up: 60,
+          endMove: [],
+          go: false,
+          timeCount: 10,
+          timeClicked: false,
+          world: 1,
+          level: 1,
+          counter: 0,
+          filler: "O",
+          win: false,
+          wins: [0,0],
+          board: [["T","I","C"],["T","A","C"],["T","O","E"]]
+        });
+        $scope.fbRoot.$on('change', function() {
+          IDs = $scope.fbRoot.$getIndex();
+          $scope.game = $scope.fbRoot.$child(IDs[0]);
+        });
+      } 
+      else 
+      {
+        $scope.game = $scope.fbRoot.$child(IDs[0]);
+      }
+    });
+}
 
 
 
-
-  $scope.game = {
-    move: 0,
-    up: 60,
-    endMove: [],
-    go: false,
-    timeCount: 10,
-    timeClicked: false,
-    world: 1,
-    level: 1,
-    counter: 0,
-    filler: "O",
-    clickSound: new Audio('sounds/smw_coin.wav'),
-    winnerSound: new Audio('sounds/winner.wav'),
-    resetSound: new Audio('sounds/reset.wav'),
-    win: false,
-    wins: [0,0],
-    board: [["T","I","C"],["T","A","C"],["T","O","E"]]
-  };
+  
 
 
 
-
+$scope.loadNewGame = function() {
 //will run reset right away instead of loading these variables
+  $scope.gameMode = [false,false,false,false];
   $scope.cycle = 0;
   $scope.resetClass = "coinBox";
   $scope.resetText = "?";
@@ -96,6 +77,24 @@ angular.module('marioTicTacToe', ['firebase'])
   $scope.player2Ready = "";
   $scope.showSelection = [true,true,true,true,false,false,false,false];
   $scope.selector = ["","","<"," "," "," "];
+
+  $scope.game = {
+    move: 0,
+    up: 60,
+    endMove: [],
+    go: false,
+    timeCount: 10,
+    timeClicked: false,
+    world: 1,
+    level: 1,
+    counter: 0,
+    filler: "O",
+    win: false,
+    wins: [0,0],
+    board: [["T","I","C"],["T","A","C"],["T","O","E"]]
+  };
+
+}
 
 
 //first screen you see
@@ -183,6 +182,7 @@ angular.module('marioTicTacToe', ['firebase'])
       $scope.resetStyle = "block";
       $scope.marioDisplayStyle = "block";
       $scope.walk();
+      $scope.gameMode[0] = true;
     }
   //if player 2 is selected show next options
     else if (i == 3) {
@@ -192,6 +192,7 @@ angular.module('marioTicTacToe', ['firebase'])
       $scope.selector[4] = "<";
       $scope.showSelection[2] = false;
       $scope.showSelection[3] = false;
+      $scope.gameMode[1] = true;
     }
     //if selected run pass n play mode
     else if (i == 4) {
@@ -200,6 +201,7 @@ angular.module('marioTicTacToe', ['firebase'])
       $scope.marioDisplayStyle = "block";
       $scope.resetStyle = "block";
       $scope.walk();
+      $scope.gameMode[2] = true;
     }
     //if selected run online mode
     else if (i == 5) {
@@ -208,6 +210,8 @@ angular.module('marioTicTacToe', ['firebase'])
       $scope.marioDisplayStyle = "block";
       $scope.resetStyle = "block";
       $scope.walk();
+      $scope.gameMode[3] = true;
+      $scope.onlineMode();
     }
   }
 
@@ -262,25 +266,33 @@ angular.module('marioTicTacToe', ['firebase'])
 	}
 
 
-
+  $scope.updateOnline = function() {
+    if($scope.gameMode[3] == true) {
+      console.log("true");
+      $scope.game.$save;
+    }
+  }
 	
 
 
     $scope.resetClick = function(){
         $scope.resetText = 'RESET';
-        $scope.game.resetSound.play();
+        new Audio('sounds/reset.wav').play();
         $scope.reset();
+        $scope.updateOnline();
     }
     
     $scope.boardClickHandler = function(i, j) {
       if ($scope.game.board[i][j] == "" && $scope.game.win == false) {
-          $scope.game.clickSound.play();
+          new Audio('sounds/smw_coin.wav').play();
           $scope.togglePlayer();
           $scope.game.board[i][j] = $scope.game.filler;
           $scope.game.boardClass = "";
           $scope.game.counter++;
           $scope.game.timeCount = 10;
+          $scope.updateOnline();
           $scope.checkWin();
+          $scope.updateOnline();
       } 
     }
     
@@ -302,9 +314,11 @@ angular.module('marioTicTacToe', ['firebase'])
              if(d1 == 3 || d2 ==3) {
               $scope.game.win = true;
               if ($scope.game.filler == "X") {
+                $scope.updateOnline();
                 $scope.player1Wins();
               }
               else {
+                $scope.updateOnline();
                 $scope.player2Wins();
               }
              }
@@ -313,13 +327,15 @@ angular.module('marioTicTacToe', ['firebase'])
           if (r == 3 || c == 3){
             $scope.game.win = true;
             if ($scope.game.filler == "X") {
+              $scope.updateOnline();
               $scope.player1Wins();
             } 
             else {
+              $scope.updateOnline();
               $scope.player2Wins();
             }
           }
-          else if ($scope.game.counter == 9) {$scope.turn="TIE"}
+          else if ($scope.game.counter == 9) {$scope.turn="TIE"; $scope.updateOnline();}
 
         }
      }
@@ -329,6 +345,7 @@ angular.module('marioTicTacToe', ['firebase'])
         $scope.turn = "MARIO WINS!";
         $scope.game.wins[0]++;
         $scope.score1 = $scope.game.wins[0];
+        $scope.updateOnline();
         $scope.gameOver();
     }
 
@@ -336,11 +353,13 @@ angular.module('marioTicTacToe', ['firebase'])
         $scope.turn = "LUIGI WINS!";
         $scope.game.wins[1]++;
         $scope.score2 = $scope.game.wins[1];
+        $scope.updateOnline();
         $scope.gameOver();
     }
 
   $scope.marioGoInCastle = function () {
      $scope.marioPosition();
+     $scope.updateOnline();
       //figure out offsets
      if ($scope.marioLeftStyle > $scope.castleStyle + 60) {
       $scope.marioBgStyle = "-225px 0";
@@ -358,6 +377,7 @@ angular.module('marioTicTacToe', ['firebase'])
     if ($scope.game.up <= 65) {
       $scope.marioBgStyle = "-225px 0";
       $scope.marioGoInCastle();
+      $scope.updateOnline();
     }
     else {
       if ($scope.game.up <= 80) {
@@ -377,6 +397,7 @@ angular.module('marioTicTacToe', ['firebase'])
 
   $scope.jumpOnFlagSequence = function () {
     $scope.marioPosition();
+    $scope.updateOnline();
 
       if ($scope.marioLeftStyle > $scope.flagLeftStyle - 11) {
         $scope.slideDownFlag();
@@ -419,12 +440,13 @@ angular.module('marioTicTacToe', ['firebase'])
       $scope.flagLeftStyle = $scope.game.endMove[4];
       $scope.flagPoleStyle = $scope.game.endMove[5]; 
       $scope.marioPosition();
+      $scope.updateOnline();
     } 
      });}, 50);
   } 
 
     $scope.gameOver = function () {
-        $scope.game.winnerSound.play();
+        new Audio('sounds/winner.wav').play();
         $scope.resetText = 'NEW GAME';
         for (var i=0;i<$scope.game.board.length;i++){
           for (var j=0;j<$scope.game.board[i].length;j++) {
@@ -436,6 +458,7 @@ angular.module('marioTicTacToe', ['firebase'])
         $scope.game.timeClicked = false;
         $scope.resetStyle = 'none';
         $scope.gameStyle = 'none';
+        $scope.updateOnline();
         $scope.endGameSequence();
         setTimeout(function(){$scope.$apply(function(){clearInterval($scope.endGameTimer);$scope.jumpOnFlagSequence();});},3000);
     }
@@ -488,17 +511,21 @@ angular.module('marioTicTacToe', ['firebase'])
          	$scope.world = $scope.game.world;
           $scope.level = $scope.game.level;
          }
+         $scope.updateOnline();
        if (!$scope.game.timeClicked) {
 	      $scope.timer = setInterval( function() {
           $scope.$apply(function() {
 	    			$scope.game.timeCount--;
 	    			$scope.game.timeClicked = true;
 	    			$scope.timeCountdown = $scope.game.timeCount;
+            $scope.updateOnline();
 	    			if ($scope.game.timeCount <= 0) {
 	    				if ($scope.game.filler == "X") {
+                $scope.updateOnline();
 	    					$scope.player1Wins();
 	    				}
     					else {
+                $scope.updateOnline();
     						$scope.player2Wins();
     					}
 	    			}

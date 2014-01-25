@@ -1,13 +1,13 @@
 <html>
 <head>
-	<title></title>
+	<title>MARIO TIC TAC TOE</title>
 	<link type="text/css" rel="stylesheet" href="css/style.css"></link>
 	<script src="js/lib/angular.min.js"></script>
 	<script src="https://cdn.firebase.com/v0/firebase.js"></script>
 	<script src="https://cdn.firebase.com/libs/angularfire/0.6.0/angularfire.min.js"></script>
 	<script src="js/script.js"></script>
 </head>
-<body offsets class="coinCursor" id="body" x-ng-app="marioTicTacToe" x-ng-controller="MainCtrl" x-ng-init="welcomeScreen();" x-ng-keydown="keyPressed($event)">
+<body offsets class="coinCursor" id="body" x-ng-app="marioTicTacToe" x-ng-controller="MainCtrl" x-ng-init="loadNewGame();welcomeScreen();" x-ng-keydown="keyPressed($event)">
 	<div id="app" x-ng-class="{'show': showSelection[7], 'hide': !showSelection[7]}">
 		<div id='userInfo'>
 			<div id='player1'>
