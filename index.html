@@ -1,0 +1,79 @@
+<html>
+<head>
+	<title>MARIO TIC TAC TOE</title>
+	<link type="text/css" rel="stylesheet" href="css/style.css"></link>
+	<script src="js/lib/angular.min.js"></script>
+	<script src="https://cdn.firebase.com/v0/firebase.js"></script>
+	<script src="https://cdn.firebase.com/libs/angularfire/0.6.0/angularfire.min.js"></script>
+	<script src="js/script.js"></script>
+</head>
+<body offsets class="coinCursor" id="body" x-ng-app="marioTicTacToe" x-ng-controller="MainCtrl" x-ng-init="loadNewGame();welcomeScreen();" x-ng-keydown="keyPressed($event)">
+	<div id="app" x-ng-class="{'show': showSelection[7], 'hide': !showSelection[7]}">
+		<div id='userInfo'>
+			<div id='player1'>
+				<span id='name1'>MARIO</span><br />
+				<span id='score1'>WINS = {{score1}}</span>
+			</div>
+			<div id='player2'>
+				<span id='name2'>LUIGI</span><br />
+				<span id='score2'>WINS = {{score2}}</span>
+			</div>
+			<div id="level">
+				WORLD<br />
+				<span id="world">{{world}} - {{level}}</span>
+			</div>
+			<div id="who">
+				TURN<br />
+				<span id="turn">{{turn}}</span>
+			</div>
+			<div id="timer">
+				TIME<br />
+				<span id='time'>{{timeCountdown}}</span>
+			</div>
+		</div>
+		<div class="clear"></div>
+		<div id="spaceHolder"></div>
+		<div id='game' style="display: {{gameStyle}}">
+			<div id="gameBoard">
+				<div x-ng-repeat="row in game.board track by $index" id="row{{$index}}">
+					<div x-ng-repeat="cell in row track by $index" id="cell{{$parent.$index}}{{$index}}" x-ng-click="boardClickHandler($parent.$index, $index);" class="{{boardClass}}">{{game.board[$parent.$index][$index]}}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="begin" class="{{resetClass}}" x-ng-click="resetClick();" style="display: {{resetStyle}};">{{resetText}}</div>
+	<div offsets id="mario" class="{{marioClass}}" style="bottom: {{marioBottomStyle}}px; display: {{marioDisplayStyle}};left: {{marioLeftStyle}}px; background-position: {{marioBgStyle}};"></div>
+	<div id="reg" style="left: {{floorStyle}}px"></div>
+	<div offsets id="cloud" style="left: {{cloudLeft1}}px; top: {{cloudTop1}}px;"></div>
+	<div offsets id="cloud2" style="left: {{cloudLeft2}}px; top: {{cloudTop2}}px;"></div>
+	<div offsets id="cloud3" style="left: {{cloudLeft3}}px; top: {{cloudTop3}}px;"></div>
+	<div offsets id="cloudCluster" style="left: {{cloudLeft4}}px; top: {{cloudTop4}}px;"></div>
+	<div offsets id="bush" style="left: {{bushStyle}}px;"></div>
+	<div id="mountain" style="left: {{mountainStyle}}px"></div>
+	<div id="castle" style="left: {{castleStyle}}px"></div>
+	<div id="flag" style="left: {{flagLeftStyle}}px; bottom: {{flagBottomStyle}}px;"></div>
+	<div id="flagPole" style="left: {{flagPoleStyle}}px"></div>
+	<div id="welcomeScreen" x-ng-class="{'show': showSelection[0], 'hide': !showSelection[0]}">
+		<div><h1>SUPER MARIO</h1><span>TIC TAC TOE</span></div>
+		<div id="gameStyle" x-ng-class="{'show': showSelection[1]}">
+			<ul>
+				<li x-ng-click="welcomeScreenMouseClick(2);" x-ng-class="{'show': showSelection[2], 'hide': !showSelection[2]}">1 PLAYER   {{selector[2]}}</li>
+				<li x-ng-click="welcomeScreenMouseClick(3);" x-ng-class="{'show': showSelection[3], 'hide': !showSelection[3]}">2 PLAYERS {{selector[3]}}</li>
+				<li x-ng-click="welcomeScreenMouseClick(4);" x-ng-class="{'show': showSelection[4], 'hide': !showSelection[4]}">PASS-N-PLAY {{selector[4]}}</li>
+				<li x-ng-click="welcomeScreenMouseClick(5);" x-ng-class="{'show': showSelection[5], 'hide': !showSelection[5]}">ONLINE      {{selector[5]}}</li>
+			</ul>
+		</div>
+		<div id="waitingForPlayer" x-ng-class="{'show': showSelection[6], 'hide': !showSelection[6]}">
+			<div>PLAYER 1 - {{player1Ready}}</div>
+			<div>PLAYER 2 - {{player2Ready}}</div>
+		</div>
+	</div>
+
+</body>
+</html>
+
+
+
+
+
+<!--  -->

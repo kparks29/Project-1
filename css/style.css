@@ -1,0 +1,446 @@
+/*create the font*/
+
+@font-face {
+font-family: nintendo;
+src: url('fonts/emulogic.ttf');
+}
+/*create the cursor*/
+.coinCursor { 
+	cursor: url('images/coin.gif'), auto; 
+}
+
+.show {
+	display: block;
+}
+.hide {
+	display: none;
+}
+
+#welcomeScreen {
+	width: 700px;
+	height: 300px;
+	color: white;
+	margin: 100px auto;
+	background-color: rgba(228, 92 ,16,1);
+	padding: 30px;
+	border-top:5px solid rgba(252, 160 ,68, 0.9);
+	border-left:5px solid rgba(252, 160 ,68, 0.9);
+	border-bottom:5px solid rgba(136, 20 ,0, 0.9);
+	border-right:5px solid rgba(136, 20 ,0, 0.9);
+}
+
+#welcomeScreen h1 {
+	font-size: 62px;
+}
+
+#welcomeScreen span {
+	font-size: 25px;
+}
+
+#gameStyle {
+	text-align: left;
+	position: relative;
+	left: 32.5%;
+	margin: 50px auto;
+}
+#gameStyle ul li{
+	list-style-type: none;
+}
+
+/*create mario*/
+#mario {
+	position: absolute;
+	bottom: 60px;
+	height:54px;
+	width: 45px;
+	overflow: hidden;
+	background-image: url('images/mariosprite.gif');
+	background-position: -225px;
+	border: 0;
+}
+#cloud, #cloud2, #cloud3 {
+	background-image: url('images/cloud.gif');
+	left: 15%;
+	top: 110px;
+	width: 75px;
+	height: 55px;
+}
+
+#castle {
+	background-image: url('images/castle.gif');
+	left: 115%;
+	bottom: 65px;
+	width: 200px;
+	height: 200px;
+}
+
+#flag {
+	background-image: url('images/flag.gif');
+	left: 101.5%;
+	bottom: 350px;
+	width: 33px;
+	height: 33px;
+}
+
+#flagPole {
+	background-image: url('images/flagPole.gif');
+	left: 100%;
+	bottom: 65px;
+	width: 100px;
+	height: 348px;
+}
+
+#cloudCluster, #bush, #mountain, #cloud, #cloud2, #cloud3, #castle, #flag, #flagPole {
+	z-index: -1;
+	background-size: cover;
+	position: absolute;
+}
+
+#cloud2 {
+	left: 110%;
+	top: 80px;
+}
+
+#cloud3 {
+	left: 75%;
+	top: 200px;
+}
+
+#cloudCluster {
+	background-image: url('images/cloudcluster.gif');
+	left: 40%;
+	top: 280px;
+	width: 225px;
+	height: 90px;
+}
+#bush {
+	background-image: url('images/bush.gif');
+	left: 680px;
+	bottom: 65px;
+	width: 300px;
+	height: 70px;
+}
+#mountain {
+	background-image: url('images/mountain.gif');
+	left: 20px;
+	bottom: 65px;
+	width: 250px;
+	height: 100px;
+}
+
+body {
+	background-color: rgba(104, 136 ,252,1);
+	font-family: nintendo;
+	text-shadow: -1px 0 black, 0 3px black, 3px 1px black, 0 -1px black;
+	text-align: center;
+	vertical-align: middle;
+}
+.button, #reg, .coinBox {
+	position: absolute;
+}
+/*the reset start/button after the animation*/
+.button {
+	font-size: 18px;
+	line-height: 35px;
+	bottom: 200px;
+	width: 200px;
+	height: 40px;
+	left: 200px;
+}
+
+/*the floor*/
+#reg {
+	width: 3000px;
+	height: 66px;
+	bottom: 0px;
+	left: -1px;
+	background-image: url('images/ground.gif');
+	background-repeat: repeat;
+
+}
+/*the startbutton before the animation*/
+.coinBox {
+	bottom: 200px;
+	left: 275px;
+	width: 50px;
+	height: 45px;
+	font-size: 20px;
+	line-height: 40px;
+}
+
+/*left div holding the player's names and scores*/
+#userInfo {
+	padding-left: 10%;
+	width: 90%;
+	height: 75px;
+	position: relative;
+	top:0;
+}
+/*player1 & player2 name and score & whose turn it border-image-source: */
+#player1, #player2, #level, #who, #timer {
+	height: 75px;
+	width: 200px;
+	float: left;
+	margin-top: 5px;
+	line-height: 30px;
+	font-size: 20px;
+}
+
+#score1, #score2, #world, #turn, #time {
+	font-size: 15px;
+}
+
+/*main container div*/
+#app {
+	position: relative;
+	z-index: 0;
+	top: 0;
+	left: 0;
+	width:100%;
+	height:600px;
+	color: white;
+	font-size: 10px;
+}
+
+#spaceHolder {
+	width: 40%;
+	height: 400px;
+	float: left;
+}
+/*container to hold the gameboard*/
+#game {
+	margin-top: 50px;
+	width: 50%;
+	height: 500px;
+	float: left;
+	font-size: 25px;
+} 
+
+/*main gameboard*/
+#gameBoard {
+	width: 350px;
+	height: 350px;
+	margin: 0 auto;
+	background-color: rgba(228, 92 ,16,1);
+	padding-top: 40px;
+	padding-left: 40px;
+	border-top:5px solid rgba(252, 160 ,68, 0.9);
+	border-left:5px solid rgba(252, 160 ,68, 0.9);
+	border-bottom:5px solid rgba(136, 20 ,0, 0.9);
+	border-right:5px solid rgba(136, 20 ,0, 0.9);
+}
+/*cells of the gameboard*/
+#gameBoard div div{
+	padding: 0;
+	margin: 0;
+	width: 100px;
+	height: 100px;
+	line-height: 100px;
+	float: left;
+}
+/*bottom borders for tic tac toe*/
+#cell00, #cell01, #cell02, #cell10, #cell11, #cell12 {
+	border-bottom: 5px solid rgba(252, 224 ,168,1);
+}
+/*side borders for tic tac toe*/
+#cell01, #cell02, #cell11, #cell12, #cell21, #cell22 {
+	border-left: 5px solid rgba(252, 224 ,168,1);
+}
+/*hover affect for cells*/
+.gameBoardHover:hover {
+	background-color: rgba(252, 160 ,68,1);
+}
+/*active(click) affect for cells*/
+.gameBoardHover:active {
+	background-color: rgba(136, 20 ,0,1);
+}
+
+/*clearing div*/
+.clear {
+	clear: both;
+}
+/*main stuff for start/reset button*/
+#begin {
+	background-color: rgba(252,160,68,1);
+	border-top:5px solid rgba(228, 92 ,16,1);
+	border-left:5px solid rgba(228, 92 ,16,1);
+	border-bottom:5px solid rgba(136, 20 ,0, 0.9);
+	border-right:5px solid rgba(136, 20 ,0, 0.9);
+	color: rgba(228, 92 ,16,1);
+	
+}
+
+#begin:hover {
+	background-color: rgba(252, 160 ,68,1);
+
+}
+#begin:active {
+	background-color: rgba(136, 20 ,0,1);
+}
+
+/*mario's jump animation*/
+.jump {
+	animation: jump 1s;
+	-webkit-animation: jump 1s;
+	-moz-animation: jump 1s;
+	-ms-animation: jump 1s;
+}
+
+/*the start/reset button bounce animation once mario hits it*/
+.bounce {
+	position: absolute;
+	bottom: 200px;
+	left: 275px;
+	width: 50px;
+	height: 45px;
+	font-size: 20px;
+	line-height: 40px;
+  animation: bounce 1.8s;
+  -webkit-animation: bounce 1.8s;
+  -moz-animation: bounce 1.8s;
+  -ms-animation: bounce 1.8s;
+}
+/*the start/reset animation to grow to final state*/
+.startgamebutton {
+	position: absolute;
+	bottom: 200px;
+  animation: startgamebutton 0.5s;
+  -webkit-animation: startgamebutton 0.5s;
+  -moz-animation: startgamebutton 0.5s;
+  -ms-animation: startgamebutton 0.5s;
+}
+
+
+@keyframes jump {
+	0% {bottom: 60px;}
+	60% {bottom: 160px;}
+	100% {bottom: 60px;}
+}
+
+@-webkit-keyframes jump {
+	0% {bottom: 60px;}
+	60% {bottom: 160px;}
+	100% {bottom: 60px;}
+}
+@-moz-keyframes jump {
+	0% {bottom: 60px;}
+	60% {bottom: 160px;}
+	100% {bottom: 60px;}
+}
+@-ms-keyframes jump {
+	0% {bottom: 60px;}
+	60% {bottom: 160px;}
+	100% {bottom: 60px;}
+}
+
+
+
+@-ms-keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -moz-transform: translateY(0);
+    transform: translateY(0);
+  }
+
+  45% {
+    -webkit-transform: translateY(-30px);
+    -ms-transform: translateY(-30px);
+    -moz-transform: translateY(-30px);
+    transform: translateY(-30px);
+  }
+
+  60% {
+    -webkit-transform: translateY(-5px);
+    -ms-transform: translateY(-5px);
+    -moz-transform: translateY(-5px);
+    transform: translateY(-5px);
+  }
+}
+
+@-moz-keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -moz-transform: translateY(0);
+    transform: translateY(0);
+  }
+
+  45% {
+    -webkit-transform: translateY(-30px);
+    -ms-transform: translateY(-30px);
+    -moz-transform: translateY(-30px);
+    transform: translateY(-30px);
+  }
+
+  60% {
+    -webkit-transform: translateY(-5px);
+    -ms-transform: translateY(-5px);
+    -moz-transform: translateY(-5px);
+    transform: translateY(-5px);
+  }
+}
+@-webkit-keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -moz-transform: translateY(0);
+    transform: translateY(0);
+  }
+
+  45% {
+    -webkit-transform: translateY(-30px);
+    -ms-transform: translateY(-30px);
+    -moz-transform: translateY(-30px);
+    transform: translateY(-30px);
+  }
+
+  60% {
+    -webkit-transform: translateY(-5px);
+    -ms-transform: translateY(-5px);
+    -moz-transform: translateY(-5px);
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -moz-transform: translateY(0);
+    transform: translateY(0);
+  }
+
+  45% {
+    -webkit-transform: translateY(-30px);
+    -ms-transform: translateY(-30px);
+    -moz-transform: translateY(-30px);
+    transform: translateY(-30px);
+  }
+
+  60% {
+    -webkit-transform: translateY(-5px);
+    -ms-transform: translateY(-5px);
+    -moz-transform: translateY(-5px);
+    transform: translateY(-5px);
+  }
+}
+
+
+@keyframes startgamebutton {
+  0% {width: 50px;height: 45px;left: 275px;}
+  100% {width: 200px;height: 40px;left: 200px;}
+}
+@-webkit-keyframes startgamebutton {
+  0% {width: 50px;height: 45px;left: 275px;}
+  100% {width: 200px;height: 40px;left: 200px;}
+}
+@-moz-keyframes startgamebutton {
+  0% {width: 50px;height: 45px;left: 275px;}
+  100% {width: 200px;height: 40px;left: 200px;}
+}
+@-ms-keyframes startgamebutton {
+  0% {width: 50px;height: 45px;left: 275px;}
+  100% {width: 200px;height: 40px;left: 200px;}
+}
+
