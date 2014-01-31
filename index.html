@@ -9,6 +9,8 @@
 </head>
 <body offsets class="coinCursor" id="body" x-ng-app="marioTicTacToe" x-ng-controller="MainCtrl" x-ng-init="loadNewGame();welcomeScreen();" x-ng-keydown="keyPressed($event)">
 	<div id="app" x-ng-class="{'show': showSelection[7], 'hide': !showSelection[7]}">
+
+		<!-- The top bar with the score, level, and timer -->
 		<div id='userInfo'>
 			<div id='player1'>
 				<span id='name1'>MARIO</span><br />
@@ -33,6 +35,8 @@
 		</div>
 		<div class="clear"></div>
 		<div id="spaceHolder"></div>
+		
+		<!-- This is the gameboard -->
 		<div id='game' style="display: {{gameStyle}}">
 			<div id="gameBoard">
 				<div x-ng-repeat="row in game.board track by $index" id="row{{$index}}">
@@ -41,6 +45,9 @@
 			</div>
 		</div>
 	</div>
+
+<!-- These are all the elements that I move in my animations -->
+
 	<div id="begin" class="{{resetClass}}" x-ng-click="resetClick();" style="display: {{resetStyle}};">{{resetText}}</div>
 	<div offsets id="mario" class="{{marioClass}}" style="bottom: {{marioBottomStyle}}px; display: {{marioDisplayStyle}};left: {{marioLeftStyle}}px; background-position: {{marioBgStyle}};"></div>
 	<div id="reg" style="left: {{floorStyle}}px"></div>
@@ -53,6 +60,9 @@
 	<div id="castle" style="left: {{castleStyle}}px"></div>
 	<div id="flag" style="left: {{flagLeftStyle}}px; bottom: {{flagBottomStyle}}px;"></div>
 	<div id="flagPole" style="left: {{flagPoleStyle}}px"></div>
+
+<!-- This is the main menu on the start up screen -->
+
 	<div id="welcomeScreen" x-ng-class="{'show': showSelection[0], 'hide': !showSelection[0]}">
 		<div><h1>SUPER MARIO</h1><span>TIC TAC TOE</span></div>
 		<div id="gameStyle" x-ng-class="{'show': showSelection[1]}">
