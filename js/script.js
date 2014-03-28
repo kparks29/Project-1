@@ -238,12 +238,20 @@ angular.module('marioTicTacToe', ['firebase'])
     }
   //if player 2 is selected show next options
     else if (i == 3) {
-      $scope.showSelection[4] = true;
-      $scope.showSelection[5] = true;
-      $scope.selector[3] = " ";
-      $scope.selector[4] = "<";
-      $scope.showSelection[2] = false;
-      $scope.showSelection[3] = false;
+      $scope.showSelection[7] = true;
+      $scope.showSelection[0] = false;
+      $scope.marioDisplayStyle = "block";
+      $scope.resetStyle = "block";
+      $scope.walk();
+      $scope.gameMode[1] = true;
+
+      //this is for online mode
+      // $scope.showSelection[4] = true;
+      // $scope.showSelection[5] = true;
+      // $scope.selector[3] = " ";
+      // $scope.selector[4] = "<";
+      // $scope.showSelection[2] = false;
+      // $scope.showSelection[3] = false;
     }
     //if selected run pass n play mode
     else if (i == 4) {
