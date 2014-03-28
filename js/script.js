@@ -11,8 +11,8 @@ angular.module('marioTicTacToe', ['firebase'])
 .controller('MainCtrl', function($scope,$firebase) {	
 
   //see's if there are two players active and sets a symbol to them
-  $scope.setPlayer = function() {
   //if there is not 1 player then add him
+  $scope.setPlayer = function() {
     if (!$scope.game.player[0]) {
       $scope.game.player[0] = true;
       $scope.playerSymbol = "X";
@@ -22,6 +22,7 @@ angular.module('marioTicTacToe', ['firebase'])
       $scope.game.player[1] = true;
       $scope.playerSymbol = "O";
     }
+
     //if both players exist, announce game is full in the console
     else if ($scope.game.player[0] && $scope.game.player[1]) {
       console.log("sorry game is full");
@@ -39,6 +40,7 @@ angular.module('marioTicTacToe', ['firebase'])
     $scope.fbRoot.$on('loaded', function() {
       var IDs = $scope.fbRoot.$getIndex();
       //if the DB is empty load up the DB with these values (aka new game)
+
       if(IDs.length == 0) {
         $scope.fbRoot.$add({ 
           endMove: [],
@@ -72,7 +74,6 @@ angular.module('marioTicTacToe', ['firebase'])
       }
       
     });
-     
   }
 
 
@@ -80,66 +81,67 @@ angular.module('marioTicTacToe', ['firebase'])
   
 
 
-  //load variables for new game
-  $scope.loadNewGame = function() {
-    $scope.gameMode = [false,false,false,false];
-    $scope.playerSymbol = "";
-    $scope.cycle = 0;
-    $scope.resetClass = "coinBox";
-    $scope.resetText = "?";
-    $scope.turn = "MARIO";
-    $scope.score1 = 0;
-    $scope.score2 = 0;
-    $scope.world = 1;
-    $scope.level = 1;
-    $scope.timeCountdown = 10;
-    $scope.cloudLeft1 = 150;
-    $scope.cloudTop1 = 110;
-    $scope.cloudLeft2 = 1300;
-    $scope.cloudTop2 = 80;
-    $scope.cloudLeft3 = 750;
-    $scope.cloudTop3 = 200;
-    $scope.cloudLeft4 = 400;
-    $scope.cloudTop4 = 280;
-    $scope.floorStyle = 0;
-    $scope.marioBottomStyle = 60;
-    $scope.marioDisplayStyle = 'none';
-    $scope.resetStyle = 'none';
-    $scope.bushStyle = 680;
-    $scope.floorStyle = -1;
-    $scope.mountainStyle = 20;
-    $scope.castleStyle = 1475;
-    $scope.flagLeftStyle = 1320;
-    $scope.flagBottomStyle = 350;
-    $scope.flagPoleStyle = 1300;
-    $scope.player1Ready = "";
-    $scope.player2Ready = "";
-    $scope.showSelection = [true,true,true,true,false,false,false,false];
-    $scope.selector = ["","","<"," "," "," "];
-    $scope.move = 0;
-    $scope.up = 60;
+$scope.loadNewGame = function() {
+//will run reset right away instead of loading these variables
+  $scope.gameMode = [false,false,false,false];
+  $scope.playerSymbol = "";
+  $scope.cycle = 0;
+  $scope.resetClass = "coinBox";
+  $scope.resetText = "?";
+  $scope.turn = "MARIO";
+  $scope.score1 = 0;
+  $scope.score2 = 0;
+  $scope.world = 1;
+  $scope.level = 1;
+  $scope.timeCountdown = 10;
+  $scope.cloudLeft1 = 150;
+  $scope.cloudTop1 = 110;
+  $scope.cloudLeft2 = 1300;
+  $scope.cloudTop2 = 80;
+  $scope.cloudLeft3 = 750;
+  $scope.cloudTop3 = 200;
+  $scope.cloudLeft4 = 400;
+  $scope.cloudTop4 = 280;
+  $scope.floorStyle = 0;
+  $scope.marioBottomStyle = 60;
+  $scope.marioDisplayStyle = 'none';
+  $scope.resetStyle = 'none';
+  $scope.bushStyle = 680;
+  $scope.floorStyle = -1;
+  $scope.mountainStyle = 20;
+  $scope.castleStyle = 1475;
+  $scope.flagLeftStyle = 1320;
+  $scope.flagBottomStyle = 350;
+  $scope.flagPoleStyle = 1300;
+  $scope.player1Ready = "";
+  $scope.player2Ready = "";
+  $scope.showSelection = [true,true,true,true,false,false,false,false];
+  $scope.selector = ["","","<"," "," "," "];
+  $scope.move = 0;
+  $scope.up = 60;
 
   //load the game object for new game
-    $scope.game = {
-      endMove: [],
-      go: false,
-      timeCount: 10,
-      timeClicked: false,
-      world: 1,
-      level: 1,
-      counter: 0,
-      filler: "X",
-      win: false,
-      wins: [0,0],
-      board: [["T","I","C"],["T","A","C"],["T","O","E"]],
-      player: [false,false],
-      players: [
-       {chip: 'X', gamesWon:0},
-       {chip:'O',gamesWon:0,nextMove: [{row:false, num:0},{col:false,num:0},{dia1:false},{dia2:false}]}
-       ],
-      xturn: {val:false}
-    };
-  }
+  $scope.game = {
+    endMove: [],
+    go: false,
+    timeCount: 10,
+    timeClicked: false,
+    world: 1,
+    level: 1,
+    counter: 0,
+    filler: "X",
+    win: false,
+    wins: [0,0],
+    board: [["T","I","C"],["T","A","C"],["T","O","E"]],
+    player: [false,false],
+    players: [
+     {chip: 'X', gamesWon:0},
+     {chip:'O',gamesWon:0,nextMove: [{row:false, num:0},{col:false,num:0},{dia1:false},{dia2:false}]}
+     ],
+    xturn: {val:false}
+      };
+}
+
 
 
 
@@ -148,6 +150,7 @@ angular.module('marioTicTacToe', ['firebase'])
   $scope.welcomeScreen = function() {
     $scope.cloudMover();
   }
+
 
 //if a key is pressed run this
   $scope.keyPressed = function(key) {
@@ -176,6 +179,7 @@ angular.module('marioTicTacToe', ['firebase'])
       return 5;
     }
   }
+
 //toggle the selector for key presses
   $scope.toggleSelector = function(i) {
     if (i == 2) {
@@ -195,6 +199,7 @@ angular.module('marioTicTacToe', ['firebase'])
       $scope.selector[4] = "<"
     }
   }
+
 //toggle the selector for mouse clicks
   $scope.toggleSelectorMouse = function(i) {
     if (i == 2) {
@@ -215,6 +220,7 @@ angular.module('marioTicTacToe', ['firebase'])
       $scope.selector[4] = " "
     }
   }
+
 
 //check to see if you clicked on the selected item then run the game mode, if not toggle
   $scope.welcomeScreenMouseClick = function(i) {
@@ -238,6 +244,7 @@ angular.module('marioTicTacToe', ['firebase'])
     }
   //if player 2 is selected show next options
     else if (i == 3) {
+
       $scope.showSelection[7] = true;
       $scope.showSelection[0] = false;
       $scope.marioDisplayStyle = "block";
@@ -275,6 +282,7 @@ angular.module('marioTicTacToe', ['firebase'])
   }
 
 
+
 //the running animation for mario
   $scope.marioPosition = function() {
     switch ($scope.cycle) {
@@ -296,6 +304,7 @@ angular.module('marioTicTacToe', ['firebase'])
           break;
       }
   }
+
 //the opening walk for mario
 	$scope.walk = function() {
 		$scope.marioPosition();
@@ -330,11 +339,13 @@ angular.module('marioTicTacToe', ['firebase'])
 	}
 
 //update the DB if gamemode is online
+
   $scope.updateOnline = function() {
     if($scope.gameMode[2] == true) {
       $scope.game.$save();
     }
   }
+
 	// will help fix the sync'd animation issue
   // $scope.$watch('game.win', function(){
   //   // alert("yup");
@@ -468,6 +479,7 @@ angular.module('marioTicTacToe', ['firebase'])
       $scope.gameOver();
     }
   }
+
 
   $scope.marioGoInCastle = function () {
      $scope.marioPosition();
@@ -694,6 +706,7 @@ angular.module('marioTicTacToe', ['firebase'])
       $scope.$apply(function(){
         //first move
         if ($scope.game.counter == 1) {
+
           if ($scope.game.board[1][1] == ''  && $scope.game.level == 2) {
             $scope.game.board[1][1] = "O";
             $scope.game.counter++;
@@ -728,12 +741,14 @@ angular.module('marioTicTacToe', ['firebase'])
           $scope.game.counter++;
         }
         else if ($scope.game.counter == 3 && $scope.game.board[2][0] == "X" && $scope.game.board[1][2] == "X" && $scope.game.level == 8) {
+
           $scope.game.board[2][2] = "O";
           $scope.game.counter++;
         }
         else if ($scope.game.counter%2 == 1){
           console.log("Checking for win First")
           $scope.resetNextMove();
+
           $scope.game.filler = "O";
           $scope.checkWin();
           $scope.nextMove();
@@ -788,6 +803,7 @@ angular.module('marioTicTacToe', ['firebase'])
           } 
         }
       }
+
       if ($scope.game.players[1].nextMove[2].dia1 == true  && $scope.game.counter%2 == 1  && $scope.game.level == 5) {
         console.log("blocking dia 1")
         for (var i=0;i<$scope.game.board.length;i++){
@@ -798,7 +814,9 @@ angular.module('marioTicTacToe', ['firebase'])
           }
         } 
       }
+
       if ($scope.game.players[1].nextMove[3].dia2 == true && $scope.game.counter%2 == 1  && $scope.game.level == 6) {
+
         for (var i=0;i<$scope.game.board.length;i++) {
           if ($scope.game.board[i][2-i] == ''){
             $scope.game.board[i][2-i] = 'O';
