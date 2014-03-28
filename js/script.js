@@ -326,7 +326,7 @@ $scope.loadNewGame = function() {
       else {
         $scope.resetText = "START GAME";
       }
-     });}, 1400);
+     });}, 2000);
 
 	   	}
 //if mario hasn't reached the box move him to the left and rerun the function till he gets there
